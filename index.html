@@ -1052,7 +1052,7 @@
         <h1>心理健康自评</h1>
         <div class="role-header">
             <span class="subtitle" id="roleBadge"></span>
-            <button class="switch-role-btn" id="switchRoleBtn" onclick="document.getElementById('welcomeOverlay').classList.remove('hidden')">🔄 切换</button>
+            <button class="switch-role-btn" id="switchRoleBtn" onclick="var o=document.getElementById('welcomeOverlay');o.classList.remove('hidden');o.style.display='flex';">🔄 切换</button>
         </div>
         <div class="privacy-badge">🔒 数据仅本地存储</div>
         
@@ -1615,7 +1615,7 @@
             }
             options[idx].classList.add('selected');
             
-            state.a[state.q] = idx + 1;
+            state.a[state.q] = 4 - idx;  // A=4分(最好), B=3分, C=2分, D=1分(最差)
             el.nextBtn.style.display = 'block';
             el.nextBtn.textContent = state.q < total - 1 ? '下一题' : '查看结果';
         }
