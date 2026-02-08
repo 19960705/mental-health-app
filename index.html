@@ -1888,7 +1888,33 @@
 
         // ==================== 解压气泡 ====================
         
+        var popAudio = null;
+
+        function initAudio() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                popAudio = new AudioContext();
+            } catch (e) {}
+        }
+
         function playPopSound() {
+            try {
+                if (!popAudio) initAudio();
+                if (!popAudio) return;
+                if (popAudio.state === 'suspended') popAudio.resume();
+                const osc = popAudio.createOscillator();
+                const gain = popAudio.createGain();
+                osc.connect(gain);
+                gain.connect(popAudio.destination);
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, popAudio.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(300, popAudio.currentTime + 0.1);
+                gain.gain.setValueAtTime(0.2, popAudio.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, popAudio.currentTime + 0.1);
+                osc.start();
+                osc.stop(popAudio.currentTime + 0.1);
+            } catch (e) {}
+        }
     try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = ctx.createOscillator();
