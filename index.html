@@ -1639,7 +1639,8 @@
             }
             
             const qs = getAllQuestions();
-            const score = Math.round(sum / qs.length * 100);
+            const maxScore = qs.length * 4;  // 每题最高4分
+            const score = Math.round((sum / maxScore) * 100);  // 转换为百分制
             
             let level, icon, desc;
             if (score >= 85) {
