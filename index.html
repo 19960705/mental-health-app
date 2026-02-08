@@ -6,78 +6,219 @@
 <title>心理健康自评</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--mint:#7DD3C0;--sky:#A8D8EA;--cream:#FDF8F5}
+:root{--mint:#7DD3C0;--sky:#A8D8EA;--cream:#FDF8F5;--text:#333}
 body{font-family:-apple-system,sans-serif;background:linear-gradient(135deg,var(--cream),var(--sky));min-height:100vh;padding:20px}
 .welcome{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,var(--mint),var(--sky));z-index:1000;display:flex;align-items:center;justify-content:center}
 .welcome.hidden{display:none}
-.modal{background:white;border-radius:20px;padding:30px;max-width:380px;text-align:center}
+.modal{background:white;border-radius:20px;padding:30px;max-width:420px;width:90%;text-align:center}
 .role-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:20px 0}
-.role-card{background:var(--cream);border-radius:12px;padding:16px;cursor:pointer;border:2px solid transparent}
+.role-card{background:var(--cream);border-radius:12px;padding:16px 12px;cursor:pointer;border:2px solid transparent;transition:all 0.2s}
 .role-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
-.role-card.selected{border-color:var(--mint);background:linear-gradient(135deg,var(--mint),var(--sky));color:white}
-.role-icon{font-size:2em}
-.btn{width:100%;padding:14px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--mint),var(--sky));color:white;font-size:1em;cursor:pointer}
-.btn:disabled{background:#ccc;cursor:not-allowed}
-.container{max-width:500px;margin:0 auto;background:white;border-radius:20px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,0.1)}
-.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-.tab{flex:1;padding:10px;border:none;border-radius:8px;background:var(--cream);cursor:pointer}
-.tab.active{background:linear-gradient(135deg,var(--mint),var(--sky));color:white}
-.tab-content{display:none}
+.role-card.selected{border-color:var(--mint);background:linear-gradient(135deg,rgba(125,211,192,0.2),rgba(168,216,234,0.2));color:var(--mint)}
+.role-icon{font-size:2.2em}
+.role-name{font-weight:600;margin:8px 0 4px;font-size:1em}
+.role-desc{font-size:0.8em;color:#666}
+.role-desc.selected{color:var(--mint)}
+.btn{width:100%;padding:14px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--mint),var(--sky));color:white;font-size:1em;cursor:pointer;transition:all 0.2s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(125,211,192,0.4)}
+.btn:disabled{background:#ccc;cursor:not-allowed;transform:none;box-shadow:none}
+.container{max-width:520px;margin:0 auto;background:white;border-radius:20px;padding:24px;box-shadow:0 4px 20px rgba(0,0,0,0.08)}
+.tab-bar{display:flex;gap:8px;margin-bottom:20px;background:var(--cream);padding:4px;border-radius:12px}
+.tab{flex:1;padding:10px;border:none;border-radius:10px;background:transparent;cursor:pointer;font-weight:500;color:#666;transition:all 0.2s}
+.tab.active{background:white;color:var(--mint);box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.tab-content{display:none;animation:fadeIn 0.3s}
 .tab-content.active{display:block}
-.q-card{background:linear-gradient(135deg,var(--cream),var(--sky));border-radius:16px;padding:20px;margin:16px 0}
-.option{padding:12px;background:white;border-radius:10px;margin:8px 0;cursor:pointer;border:2px solid transparent}
-.option:hover{border-color:var(--mint)}
-.option.selected{background:linear-gradient(135deg,var(--mint),var(--sky));color:white}
-.progress{background:var(--cream);border-radius:10px;height:8px;margin:16px 0}
-.progress-fill{background:linear-gradient(135deg,var(--mint),var(--sky));height:100%;border-radius:10px}
-.badge{background:var(--mint);color:white;padding:4px 12px;border-radius:20px;font-size:0.8em;display:inline-block;margin-bottom:16px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.q-card{background:linear-gradient(135deg,rgba(253,248,245,0.8),rgba(168,216,234,0.15));border-radius:16px;padding:24px;margin:20px 0;border:1px solid rgba(125,211,192,0.2)}
+.q-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.q-progress{background:var(--cream);border-radius:8px;height:6px;overflow:hidden}
+.q-progress-fill{background:linear-gradient(90deg,var(--mint),var(--sky));height:100%;transition:width 0.3s ease}
+.q-dim{font-size:0.8em;color:var(--mint);font-weight:600}
+.q-text{font-size:1.1em;font-weight:500;margin-bottom:16px;line-height:1.5}
+.option{padding:14px 16px;background:white;border-radius:12px;margin:10px 0;cursor:pointer;border:2px solid transparent;transition:all 0.2s;font-size:0.95em}
+.option:hover{border-color:var(--mint);transform:translateX(4px)}
+.option.selected{background:linear-gradient(135deg,var(--mint),var(--sky));color:white;border-color:transparent;transform:translateX(4px)}
+.option .idx{display:inline-block;width:24px;height:24px;background:var(--cream);border-radius:50%;text-align:center;line-height:24px;margin-right:10px;font-weight:600;font-size:0.85em}
+.option.selected .idx{background:rgba(255,255,255,0.3)}
+.action-bar{display:flex;gap:12px;margin-top:20px}
+.action-bar .btn{flex:1}
+.switch-btn{background:transparent;border:2px solid var(--mint);color:var(--mint)}
+.result-header{text-align:center;padding:20px 0}
+.result-score{font-size:4em;font-weight:700;background:linear-gradient(135deg,var(--mint),var(--sky));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.result-level{font-size:1.2em;margin-top:8px;color:#666}
+.advice-card{background:var(--cream);border-radius:16px;padding:20px;margin:16px 0}
+.advice-title{font-weight:600;margin-bottom:12px;color:var(--text)}
+.advice-list{list-style:none}
+.advice-list li{padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.05);display:flex;align-items:flex-start}
+.advice-list li:last-child{border:none}
+.advice-icon{margin-right:10px;font-size:1.2em}
+.resource-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+.resource-item{background:var(--cream);border-radius:12px;padding:16px;text-align:center;transition:all 0.2s}
+.resource-item:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+.resource-icon{font-size:2em;margin-bottom:8px}
+.resource-name{font-weight:600;font-size:0.9em}
+.bubble-area{position:relative;height:300px;background:linear-gradient(135deg,rgba(125,211,192,0.1),rgba(168,216,234,0.2));border-radius:20px;overflow:hidden;margin:20px 0}
+.bubble{position:absolute;border-radius:50%;cursor:pointer;transition:all 0.3s;border:none}
+.bubble:hover{transform:scale(1.1)}
+.bubble.popped{transform:scale(1.5);opacity:0;pointer-events:none}
+.pop-info{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:white;padding:8px 20px;border-radius:20px;font-size:0.9em;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+.breath-circle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:150px;height:150px;border-radius:50%;background:linear-gradient(135deg,var(--mint),var(--sky));display:flex;align-items:center;justify-content:center;color:white;font-size:1.2em;transition:all 0.1s}
+.breath-text{text-align:center;pointer-events:none}
+.goal-input-group{display:flex;gap:8px;margin:16px 0}
+.goal-input{flex:1;padding:12px 16px;border:2px solid var(--cream-dark);border-radius:10px;outline:none;font-size:0.95em;transition:border-color 0.2s}
+.goal-input:focus{border-color:var(--mint)}
+.goal-list{margin-top:16px}
+.goal-item{display:flex;align-items:center;padding:12px;background:var(--cream);border-radius:10px;margin:8px 0;transition:all 0.2s}
+.goal-item:hover{transform:translateX(4px)}
+.goal-checkbox{width:24px;height:24px;border:2px solid var(--mint);border-radius:6px;margin-right:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.9em;transition:all 0.2s}
+.goal-checkbox.checked{background:var(--mint);color:white}
+.goal-text{flex:1;font-size:0.95em}
+.goal-text.completed{text-decoration:line-through;color:#999}
+.goal-delete{width:28px;height:28px;border:none;background:none;color:#999;cursor:pointer;font-size:1.2em;border-radius:6px;transition:all 0.2s}
+.goal-delete:hover{background:rgba(255,0,0,0.1);color:red}
+.goal-progress{background:var(--cream);border-radius:8px;height:8px;margin-top:12px;overflow:hidden}
+.goal-progress-fill{background:linear-gradient(90deg,var(--mint),var(--sky));height:100%;transition:width 0.3s}
+.chart-container{background:var(--cream);border-radius:16px;padding:20px;margin:16px 0}
+.chart-title{font-weight:600;margin-bottom:16px;text-align:center}
+.chart{display:flex;align-items:flex-end;justify-content:space-between;height:120px;padding:0 10px}
+.chart-bar{flex:1;background:linear-gradient(180deg,var(--mint),var(--sky));border-radius:6px 6px 0 0;margin:0 4px;position:relative;min-width:20px;transition:height 0.5s ease}
+.chart-bar:hover{opacity:0.8}
+.chart-label{position:absolute;bottom:-24px;left:50%;transform:translateX(-50%);font-size:0.7em;color:#666;white-space:nowrap}
+.chart-value{position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-size:0.75em;font-weight:600;color:var(--mint)}
+.close-btn{position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;background:var(--cream);border-radius:50%;cursor:pointer;font-size:1.2em;color:#666;transition:all 0.2s}
+.close-btn:hover{background:var(--mint);color:white}
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:2000}
+.modal-overlay.show{display:flex}
+.resources-modal .modal{background:white;border-radius:20px;padding:24px;max-width:500px;width:90%;max-height:80vh;overflow-y:auto}
+@media(max-width:480px){.role-grid{grid-template-columns:1fr 1fr}.container{padding:16px}.q-card{padding:16px}}
 </style>
 </head>
 <body>
 <div class="welcome" id="welcome">
 <div class="modal">
 <h1>🌿 心理健康自评</h1>
-<p>选择最符合你的角色</p>
+<p style="margin:12px 0 20px;color:#666;font-size:0.95em">选择最符合你的角色，获取更精准的建议</p>
 <div class="role-grid" id="roleGrid"></div>
 <button class="btn" id="startBtn" disabled>开始评估</button>
 </div>
 </div>
 <div class="container" id="main" style="display:none">
-<h1>心理健康自评</h1>
-<span class="badge" id="roleBadge"></span>
-<div class="tabs">
-<button class="tab active" data-tab="q">自评</button>
-<button class="tab" data-tab="res">资源</button>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+<h1 style="font-size:1.3em">🌿 心理健康自评</h1>
+<button class="switch-btn" id="switchRole" style="padding:8px 16px;border-radius:8px;font-size:0.85em">切换角色</button>
 </div>
-<div class="tab-content active" id="qTab">
+<span class="badge" id="roleBadge" style="background:linear-gradient(135deg,var(--mint),var(--sky));color:white;padding:6px 14px;border-radius:20px;font-size:0.85em;display:inline-block;margin-bottom:16px"></span>
+<div class="tab-bar">
+<button class="tab active" data-tab="assess">自评</button>
+<button class="tab" data-tab="trend">趋势</button>
+<button class="tab" data-tab="breath">呼吸</button>
+<button class="tab" data-tab="bubble">解压</button>
+<button class="tab" data-tab="goals">目标</button>
+</div>
+<div class="tab-content active" id="assessTab">
 <div id="questions"></div>
-<button class="btn" id="nextBtn" style="display:none">下一题</button>
+<div class="action-bar" id="actionBar" style="display:none">
+<button class="btn" id="prevBtn" style="flex:0.4;background:var(--cream);color:var(--text)">上一题</button>
+<button class="btn" id="nextBtn" style="flex:0.6">下一题</button>
 </div>
-<div class="tab-content" id="resTab">
-<h3>📚 推荐资源</h3>
-<p>阅读：《情绪急救》《当下的力量》</p>
-<p>APP：潮汐、小睡眠</p>
-<p>热线：400-161-9995</p>
+</div>
+<div class="tab-content" id="trendTab">
+<div class="chart-container">
+<div class="chart-title">📈 心理健康得分趋势（最近14天）</div>
+<div class="chart" id="chart"></div>
+</div>
+<button class="btn" onclick="loadChart()" style="margin-top:20px">刷新图表</button>
+</div>
+<div class="tab-content" id="breathTab">
+<div class="bubble-area" id="breathArea">
+<div class="breath-circle" id="breathCircle">
+<div class="breath-text">
+<div id="breathPhase">准备</div>
+<div id="breathCount" style="font-size:1.5em;font-weight:700;margin-top:4px">4-7-8 呼吸</div>
+</div>
+</div>
+<div class="pop-info" id="breathInfo">点击开始</div>
+</div>
+<div style="display:flex;gap:12px;justify-content:center;margin-top:12px">
+<button class="btn" id="breath47" style="flex:0;padding:10px 20px;border-radius:10px;font-size:0.9em">4-7-8</button>
+<button class="btn" id="breath55" style="flex:0;padding:10px 20px;border-radius:10px;font-size:0.9em;background:var(--cream);color:var(--text)">5-5</button>
+<button class="btn" id="breath66" style="flex:0;padding:10px 20px;border-radius:10px;font-size:0.9em;background:var(--cream);color:var(--text)">6-6</button>
+</div>
+</div>
+<div class="tab-content" id="bubbleTab">
+<div class="bubble-area" id="bubbleGrid"></div>
+<div class="pop-info">💫 已戳破 <span id="poppedCount">0</span>/18 个气泡</div>
+</div>
+<div class="tab-content" id="goalsTab">
+<div class="goal-input-group">
+<input type="text" class="goal-input" id="goalInput" placeholder="添加新目标...">
+<button class="btn" id="addGoal" style="flex:0;padding:12px 20px;border-radius:10px">添加</button>
+</div>
+<div class="goal-list" id="goalList"></div>
+<div class="goal-progress" id="goalProgress" style="display:none">
+<div class="goal-progress-fill" id="goalProgressFill"></div>
+</div>
+</div>
+<div class="tab-content" id="resourcesTab">
+<h3 style="margin-bottom:8px">📚 推荐资源</h3>
+<div class="resource-grid">
+<div class="resource-item" onclick="showResource('book1')">
+<div class="resource-icon">📖</div>
+<div class="resource-name">情绪急救</div>
+</div>
+<div class="resource-item" onclick="showResource('book2')">
+<div class="resource-icon">📖</div>
+<div class="resource-name">当下的力量</div>
+</div>
+<div class="resource-item" onclick="showResource('app1')">
+<div class="resource-icon">🌊</div>
+<div class="resource-name">潮汐</div>
+</div>
+<div class="resource-item" onclick="showResource('app2')">
+<div class="resource-icon">😴</div>
+<div class="resource-name">小睡眠</div>
+</div>
+<div class="resource-item" onclick="showResource('hotline')">
+<div class="resource-icon">📞</div>
+<div class="resource-name">心理热线</div>
+</div>
+<div class="resource-item" onclick="showResource('exercise')">
+<div class="resource-icon">🏃</div>
+<div class="resource-name">运动建议</div>
+</div>
+</div>
+</div>
+</div>
+<div class="modal-overlay resources-modal" id="resourcesModal">
+<div style="position:relative">
+<button class="close-btn" onclick="closeResources()">×</button>
+<div id="resourcesBody"></div>
 </div>
 </div>
 <script>
-var roles=[{id:'workplace',name:'职场女性',icon:'💼'},{id:'homemaker',name:'家庭主妇',icon:'🏠'},{id:'student',name:'学生党',icon:'📚'},{id:'freelancer',name:'自由职业',icon:'🌟'}];
-var baseQ=[{q:'近期情绪状态？',o:['积极乐观','总体还好','经常焦虑','经常沮丧']},{q:'压力程度？',o:['适中','有些压力','压力较大','压力过重']},{q:'精力水平？',o:['充沛','还可以','经常疲惫','提不起劲']},{q:'睡眠质量？',o:['良好','偶有失眠','经常失眠','严重失眠']},{q:'生活满意度？',o:['很满意','还算满意','不太满意','很不满意']}];
-var roleQ={workplace:[{q:'工作疲惫原因？',o:['工作量','人际复杂','发展迷茫','无法平衡']},{q:'下班能放松？',o:['可以','偶尔想工作','很难放松','总惦记']}],homemaker:[{q:'家务感受？',o:['成就感','平淡','有些疲惫','非常疲惫']},{q:'家人理解？',o:['非常理解','基本理解','不太理解','完全不理解']}],student:[{q:'学业压力来自？',o:['考试焦虑','课业负担','未来迷茫','peer pressure']},{q:'成绩满意？',o:['非常满意','比较满意','不太满意','很不满意']}],freelancer:[{q:'收入稳定？',o:['稳定可观','基本稳定','不太稳定','很不稳定']},{q:'工作时长？',o:['6h以下','6-8h','8-10h','10h以上']}]};
-var roleSugs={workplace:['专注工作，下班放松','建立边界','午休休息','培养爱好'],homemaker:['家务分工','独处时间','降低标准','家人支持'],student:['制定计划','适当运动','同学支持','充足睡眠'],freelancer:['固定作息','明确时间','社会支持','接受不确定']};
-var state={role:null,q:0,a:[],history:[]};
+(function(){
+var roles=[{id:'workplace',name:'职场女性',icon:'💼',desc:'工作压力大'},{id:'homemaker',name:'家庭主妇',icon:'🏠',desc:'家庭事务繁重'},{id:'student',name:'学生党',icon:'📚',desc:'学业压力繁重'},{id:'freelancer',name:'自由职业',icon:'🌟',desc:'生活不规律'},{id:'parent',name:'新手妈妈',icon:'👶',desc:'育儿压力'},{id:'career',name:'创业者',icon:'🚀',desc:'事业生活平衡'}];
+var baseQ=[{q:'近期你的情绪状态是？',dim:'情绪',o:['积极乐观，情绪稳定','总体还不错，偶尔有些低落','经常感到焦虑或情绪低落','大部分时间感到沮丧或无助']},{q:'近期你感受到的压力程度？',dim:'压力',o:['压力适中，可以应对','有些压力，但能承受','压力较大，感到有些吃力','压力过重，快喘不过气']},{q:'你的精力和活力水平？',dim:'精力',o:['精力充沛，充满活力','精力还可以，能应付日常','经常感到疲惫乏力','做什么都提不起劲']},{q:'你的睡眠质量如何？',dim:'睡眠',o:['睡眠良好，精力充沛','睡眠还可以，偶有失眠','经常失眠或睡眠不足','严重失眠，影响生活']},{q:'对自己和生活满意度？',dim:'满意',o:['很满意，感到幸福','还算满意','不太满意，有些迷茫','很不满意，需要改变']}];
+var roleQ={workplace:[{q:'工作让你感到疲惫的主要原因？',dim:'疲惫',o:['工作量过大','人际关系复杂','职业发展迷茫','工作与生活无法平衡']},{q:'下班后你能真正放松吗？',dim:'放松',o:['完全可以','偶尔会想工作','很难完全放松','总是惦记工作'}]},{homemaker:[{q:'做家务和照顾家庭时，你的感受是？',dim:'感受',o:['有成就感','平淡无感','有些疲惫','感到非常疲惫']},{q:'你的家人理解你的付出吗？',dim:'理解',o:['非常理解','基本理解','不太理解','完全不理解'}]},{student:[{q:'学业压力的主要来源是？',dim:'压力',o:['考试焦虑','课业负担过重','对未来迷茫','peer pressure'},{q:'对自己的成绩满意吗？',dim:'成绩',o:['非常满意','比较满意','不太满意','很不满意']}]},{freelancer:[{q:'你的收入稳定性如何？',dim:'收入',o:['稳定且可观','基本稳定','不太稳定','很不稳定'},{q:'你的工作时间通常是？',dim:'时间',o:['6小时以下','6-8小时','8-10小时','10小时以上']}]},{parent:[{q:'育儿过程中，你最大的挑战是？',dim:'挑战',o:['睡眠不足','个人时间被占用','情绪管理','与家人教育理念分歧']},{q:'有人帮你分担育儿压力吗？',dim:'支持',o:['有很多支持','有一定支持','支持不足','几乎没有人帮助'}]},{career:[{q:'创业过程中最大的挑战是？',dim:'挑战',o:['资金压力','团队管理','市场不确定性','家庭与事业平衡']},{q:'你对自己的事业前景感到？',dim:'前景',o:['非常有信心','比较有信心','不太确定','感到迷茫'}]}];
+var roleSugs={workplace:['学会说"不"，建立工作边界','利用午休时间小憩','培养工作之外的爱好','与信任的朋友倾诉'],homemaker:['适当"降低标准"，减少完美主义','每天留出独处时间','家务分工，不要一人承担','寻求家人的理解和支持'],student:['制定合理的学习计划','适当运动，保持身心健康','与同学互相支持','保证充足睡眠'],freelancer:['建立规律的作息时间','设定明确的工作时间','加入自由职业社群','接受收入的不确定性'],parent:['保证自己的睡眠和休息','寻找育儿伙伴或群体','与伴侣沟通分担','给自己留出"妈妈时间"'],career:['做好资金和风险管理','组建可靠的团队','与家人保持沟通','给自己适当的休息']};
+var state={role:null,qs:[],q:0,ans:[],goals:[],breathTimer:null,breathPhase:0};
+var el={};
 function init(){
-var g='';roles.forEach(function(r){g+='<div class="role-card" data-id="'+r.id+'"><div class="role-icon">'+r.icon+'</div><div>'+r.name+'</div></div>'});document.getElementById('roleGrid').innerHTML=g;
-document.querySelectorAll('.role-card').forEach(function(c){c.onclick=function(){state.role=this.dataset.id;document.querySelectorAll('.role-card').forEach(function(x){x.classList.remove('selected')});this.classList.add('selected');document.getElementById('startBtn').disabled=false})});
-document.getElementById('startBtn').onclick=start;
-var sr=localStorage.getItem('mhRole');if(sr){state.role=sr;document.getElementById('welcome').classList.add('hidden');document.getElementById('main').style.display='block';document.getElementById('roleBadge').textContent=roles.find(function(x){return x.id===sr}).icon+' '+roles.find(function(x){return x.id===sr}).name;renderQ()}};
-document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});this.classList.add('active');document.querySelectorAll('.tab-content').forEach(function(x){x.classList.remove('active')});document.getElementById(this.dataset.tab+'Tab').classList.add('active')})})}
-function start(){document.getElementById('welcome').classList.add('hidden');document.getElementById('main').style.display='block';localStorage.setItem('mhRole',state.role);var r=roles.find(function(x){return x.id===state.role});document.getElementById('roleBadge').textContent=r.icon+' '+r.name;state.q=0;state.a=[];renderQ()}
-function renderQ(){var all=baseQ.slice();if(roleQ[state.role])all=all.concat(roleQ[state.role]);var q=all[state.q];var html='<div class="progress"><div class="progress-fill" style="width:'+((state.q+1)/all.length*100)+'%"></div></div>';html+='<h3>'+(state.q+1)+'/'+all.length+' '+q.q+'</h3>';q.o.forEach(function(o,i){html+='<div class="option" data-i="'+i+'" onclick="sel('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</div>'});document.getElementById('questions').innerHTML=html;document.getElementById('nextBtn').style.display='none'}
-function sel(i){document.querySelectorAll('.option').forEach(function(x){x.classList.remove('selected')});document.querySelectorAll('.option')[i].classList.add('selected');state.a[state.q]=4-i;var all=baseQ.slice();if(roleQ[state.role])all=all.concat(roleQ[state.role]);document.getElementById('nextBtn').style.display='block';document.getElementById('nextBtn').textContent=state.q<all.length-1?'下一题':'查看结果';document.getElementById('nextBtn').onclick=state.q<all.length-1?next:result}
-function next(){state.q++;renderQ()}
-function result(){var sum=0;state.a.forEach(function(x){sum+=x});var all=baseQ.slice();if(roleQ[state.role])all=all.concat(roleQ[state.role]);var score=Math.round(sum/(all.length*4)*100);var sugs=roleSugs[state.role]||[];var html='<h2>得分：'+score+'分</h2>';html+='<h3>建议：</h3>';sugs.forEach(function(s){html+='<p>• '+s+'</p>'});html+='<button class="btn" onclick="location.reload()">重新测试</button>';document.getElementById('questions').innerHTML=html;state.history.push({date:new Date().toISOString(),score:score,role:state.role});localStorage.setItem('mhHistory',JSON.stringify(state.history))}
-init();
-</script>
-</body>
-</html>
+el.welcome=document.getElementById('welcome');el.main=document.getElementById('main');el.roleGrid=document.getElementById('roleGrid');el.startBtn=document.getElementById('startBtn');el.roleBadge=document.getElementById('roleBadge');el.questions=document.getElementById('questions');el.actionBar=document.getElementById('actionBar');el.prevBtn=document.getElementById('prevBtn');el.nextBtn=document.getElementById('nextBtn');el.switchRole=document.getElementById('switchRole');el.bubbleGrid=document.getElementById('bubbleGrid');el.poppedCount=document.getElementById('poppedCount');el.goalInput=document.getElementById('goalInput');el.addGoal=document.getElementById('addGoal');el.goalList=document.getElementById('goalList');el.goalProgress=document.getElementById('goalProgress');el.goalProgressFill=document.getElementById('goalProgressFill');var g='';for(var i=0;i<roles.length;i++){var r=roles[i];g+='<div class="role-card" data-role="'+r.id+'"><div class="role-icon">'+r.icon+'</div><div class="role-name">'+r.name+'</div><div class="role-desc">'+r.desc+'</div></div>'}el.roleGrid.innerHTML=g;el.roleGrid.querySelectorAll('.role-card').forEach(function(c){c.onclick=function(){if(this.classList.contains('selected'))return;state.role=this.dataset.role;el.roleGrid.querySelectorAll('.role-card').forEach(function(x){x.classList.remove('selected')});this.classList.add('selected');el.startBtn.disabled=false;console.log('选中角色:',state.role)}});el.startBtn.onclick=start;var sr=localStorage.getItem('mhRole');if(sr){state.role=sr;var r=roles.find(function(x){return x.id===sr});el.roleBadge.innerHTML=r.icon+' '+r.name;el.welcome.classList.add('hidden');el.main.style.display='block';renderQ()}document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});this.classList.add('active');document.querySelectorAll('.tab-content').forEach(function(x){x.classList.remove('active')});var tab=this.dataset.tab;document.getElementById(tab+'Tab').classList.add('active');if(tab==='bubble')renderBubble();if(tab==='breath')renderBreath();if(tab==='goals')renderGoals();if(tab==='trend')loadChart()}});document.querySelectorAll('.tab-content button').forEach(function(b){b.onclick=function(){document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});document.querySelectorAll('.tab-content').forEach(function(x){x.classList.remove('active')});var tab=this.closest('.tab-content').id.replace('Tab','');document.querySelector('.tab[data-tab="'+tab+'"]').classList.add('active');document.getElementById(tab+'Tab').classList.add('active')}});el.switchRole.onclick=function(){localStorage.removeItem('mhRole');location.reload()};el.prevBtn.onclick=prev;el.nextBtn.onclick=next;el.bubbleGrid.onclick=function(e){if(e.target.classList.contains('bubble')){if(e.target.classList.contains('popped'))return;e.target.classList.add('popped');var popped=document.querySelectorAll('.bubble.popped').length;el.poppedCount.textContent=popped;try{playPopSound()}catch(err){}}};el.addGoal.onclick=addGoal;el.goalInput.onkeypress=function(e){if(e.key==='Enter')addGoal()};el.breath47.onclick=function(){startBreath(4,7,8)};el.breath55.onclick=function(){startBreath(5,5,5)};el.breath66.onclick=function(){startBreath(6,6,6)}}
+function start(){state.role=localStorage.getItem('mhRole')||state.role;if(!state.role){console.error('未选择角色');return}localStorage.setItem('mhRole',state.role);var r=roles.find(function(x){return x.id===state.role});el.roleBadge.innerHTML=r.icon+' '+r.name;el.welcome.classList.add('hidden');el.main.style.display='block';state.qs=baseQ.slice();if(roleQ[state.role]){state.qs=state.qs.concat(roleQ[state.role])}state.q=0;state.ans=[];renderQ();console.log('开始评估，共',state.qs.length,'题')}
+function renderQ(){var q=state.qs[state.q];if(!q){console.error('题目不存在',state.q);return}var progress=(state.q+1)/state.qs.length*100;var html='<div class="q-card"><div class="q-header"><div class="q-dim">'+q.dim+'</div><div class="q-progress"><div class="q-progress-fill" style="width:'+progress+'%;background:linear-gradient(90deg,var(--mint),var(--sky))"></div></div></div><div class="q-text">'+(state.q+1)+'. '+q.q+'</div>';for(var i=0;i<q.o.length;i++){var selected=state.ans[state.q]===4-i?'selected':'';html+='<div class="option '+selected+'" onclick="selectOption('+i+')"><span class="idx">'+(i+1)+'</span>'+q.o[i]+'</div>'}html+='</div>';el.questions.innerHTML=html;el.actionBar.style.display='flex';el.prevBtn.style.visibility=state.q>0?'visible':'hidden';el.nextBtn.textContent=state.q<state.qs.length-1?'下一题':'查看结果'}
+function selectOption(idx){var score=4-idx;state.ans[state.q]=score;var q=state.qs[state.q];var html='<div class="q-card"><div class="q-header"><div class="q-dim">'+q.dim+'</div><div class="q-progress"><div class="q-progress-fill" style="width:'+((state.q+1)/state.qs.length*100)+'%"></div></div></div><div class="q-text">'+(state.q+1)+'. '+q.q+'</div>';for(var i=0;i<q.o.length;i++){var selected=4-i===score?'selected':'';html+='<div class="option '+selected+'" onclick="selectOption('+i+')"><span class="idx">'+(i+1)+'</span>'+q.o[i]+'</div>'}html+='</div>';el.questions.innerHTML=html;el.nextBtn.textContent=state.q<state.qs.length-1?'下一题':'查看结果'}
+function prev(){if(state.q>0){state.q--;renderQ()}}
+function next(){if(state.q<state.qs.length-1){state.q++;renderQ()}else{showResult()}}
+function showResult(){var sum=0;for(var i=0;i<state.ans.length;i++){sum+=state.ans[i]||0}var score=Math.round(sum/(state.qs.length*4)*100);var sugs=roleSugs[state.role]||[];var html='<div class="q-card"><div class="result-header"><div class="result-score">'+score+'</div><div class="result-level">'+getLevel(score)+'</div></div><div class="advice-card"><div class="advice-title">💡 针对你的建议</div><ul class="advice-list">';sugs.forEach(function(s){html+='<li><span class="advice-icon">✓</span>'+s+'</li>'});html+='</ul></div><button class="btn" onclick="location.reload()">重新评估</button></div>';el.questions.innerHTML=html;el.actionBar.style.display='none';var hist=JSON.parse(localStorage.getItem('mhHistory')||'[]');hist.push({date:new Date().toISOString(),score:score,role:state.role});localStorage.setItem('mhHistory',JSON.stringify(hist.slice(-30)));console.log('保存历史记录',hist)}
+function getLevel(s){if(s>=80)return'🌟 状态很棒！继续保持';if(s>=60)return'😊 状态不错，继续加油';if(s>=40)return'😐 状态一般，注意调节';return'😔 状态需要关注，建议寻求专业帮助'}
+function loadChart(){var hist=JSON.parse(localStorage.getItem('mhHistory')||'[]');var last14=hist.slice(-14);var html='';if(last14.length===0){html='<p style="text-align:center;color:#666;padding:40px">暂无数据</p>'}else{last14.forEach(function(h,i){var date=h.date.split('T')[0].slice(5);var height=Math.max(10,h.score);html+='<div class="chart-bar" style="height:'+height+'%;min-width:30px"><div class="chart-value">'+h.score+'</div><div class="chart-label">'+date+'</div></div>'})}document.getElementById('chart').innerHTML=html}
+function renderBubble(){var colors=['#7DD3C0','#A8E6CF','#B8A9C9','#D4C5E8','#FFB5A7','#FFD3C9'];el.bubbleGrid.innerHTML='';for(var i=0;i<18;i++){var b=document.createElement('button');b.className='bubble';var size=30+Math.random()*50;var x=Math.random()*(100-size);var y=Math.random()*(100-size);b.style.cssText='width:'+size+'px;height:'+size+'px;left:'+x+'%;top:'+y+'%;background:linear-gradient(135deg,'+colors[i%colors.length]+','+colors[(i+1)%colors.length]+')';b.onclick=function(){if(this.classList.contains('popped'))return;this.classList.add('popped');var popped=document.querySelectorAll('.bubble.popped').length;el.poppedCount.textContent=popped;try{playPopSound()}catch(err){console.error('播放音效失败',err)}};el.bubbleGrid.appendChild(b)}el.poppedCount.textContent='0'}
+function renderBreath(){document.getElementById('breathInfo').textContent='点击开始'}
+function startBreath(inTime,holdTime,outTime){if(state.breathTimer){clearInterval(state.breathTimer);state.breathTimer=null}var circle=document.getElementById('breathCircle');var phase=document.getElementById('breathPhase');var count=document.getElementById('breathCount');var phases=[{name:'吸气',time:inTime,scale:1.5},{name:'屏住',time:holdTime,scale:1.5},{name:'呼气',time:outTime,scale:1}];var p=0;var t=0;count.textContent=inTime+'-'+holdTime+'-'+outTime+' 呼吸';phase.textContent='准备';circle.style.transform='translate(-50%,-50%) scale(1)';document.getElementById('breathInfo').textContent='点击圆形停止';state.breathTimer=setInterval(function(){if(p>=phases.length){p=0;t=0}var cur=phases[p];phase.textContent=cur.name;t++;if(t>cur.time){p++;t=0;if(p<phases.length){phase.textContent=phases[p].name;var scale=phases[p].scale;circle.style.transform='translate(-50%,-50%) scale('+scale+')'}}},1000)}
+function renderGoals(){var goals=JSON.parse(localStorage.getItem('mhGoals')||'[]');state.goals=goals;var html='';var done=0;goals.forEach(function(g,i){if(g.done)done++;html+='<div class="goal-item"><div class="goal-checkbox '+(g.done?'checked':'')+'" onclick="toggleGoal('+i+')">'+(g.done?'✓':'')+'</div><span class="goal-text '+(g.done?'completed':'')+'">'+g.text+'</span><button class="goal-delete" onclick="deleteGoal('+i+')">×</button></div>'});el.goalList.innerHTML=html;if(goals.length>0){el.goalProgress.style.display='block';el.goalProgressFill.style.width=(done/goals.length*100)+'%'}else{el.goalProgress.style.display='none'}}
+function addGoal(){var text=el.goalInput.value.trim();if(!text)return;var goals=JSON.parse(localStorage.getItem('mhGoals')||'[]');goals.push({text:text,done:false});localStorage.setItem('mhGoals',JSON.stringify(goals));el.goalInput.value='';renderGoals()}
+function toggleGoal(i){var goals=JSON.parse(localStorage.getItem('mhGoals')||'[]');goals[i].done=!goals[i].done;localStorage.setItem('mhGoals',JSON.stringify(goals));renderGoals()}
+function deleteGoal(i){var goals=JSON.parse(localStorage.getItem('mhGoals')||'[]');goals.splice(i,1);localStorage.setItem('mhGoals',JSON.stringify(goals));renderGoals()}
+var popAudio=null;function initAudio(){try{var AudioContext=window.AudioContext||window.webkitAudioContext;popAudio=new AudioContext()}catch(e){console.error('AudioContext创建失败',e)}}
+function playPopSound(){try{if(!popAudio)initAudio();if(!popAudio)return;if(popAudio.state==='suspended')popAudio.resume();var osc=popAudio.createOscillator();var gain=popAudio.createGain();osc.connect(gain);gain.connect(popAudio.destination);osc.type='sine';osc.frequency.setValueAt
