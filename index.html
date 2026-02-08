@@ -37,22 +37,18 @@
         .btn-primary{background:linear-gradient(135deg,var(--mint),var(--sky));color:white;box-shadow:0 6px 20px var(--shadow)}
         .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px var(--shadow)}
         .btn-primary:disabled{background:#ccc;cursor:not-allowed;transform:none;box-shadow:none}
-        .btn-secondary{background:var(--cream);color:var(--text)}
         .progress-bar{background:var(--cream);border-radius:10px;height:8px;margin-bottom:16px;overflow:hidden}
         .progress-fill{background:linear-gradient(90deg,var(--mint),var(--sky));height:100%;border-radius:10px;transition:width 0.4s}
         .progress-text{font-size:0.8em;color:var(--text-light);text-align:center;margin-bottom:8px}
         .question-card{background:linear-gradient(135deg,var(--cream),var(--sky-light));border-radius:16px;padding:20px;margin-bottom:16px}
         .question-number{color:var(--mint);font-size:0.85em;margin-bottom:8px;font-weight:600}
         .question-text{color:var(--text);font-size:1.05em;margin-bottom:16px;line-height:1.6;font-weight:500}
-        .question-hint{color:var(--text-light);font-size:0.8em;margin-bottom:12px;font-style:italic}
         .option{display:flex;align-items:center;padding:14px 16px;background:white;border:2px solid var(--cream-dark);border-radius:12px;margin-bottom:10px;cursor:pointer;transition:all 0.25s}
         .option:hover{border-color:var(--mint);background:var(--cream);transform:translateX(6px)}
         .option.selected{border-color:var(--mint);background:linear-gradient(135deg,var(--mint-light),var(--sky-light));transform:translateX(12px);box-shadow:0 6px 20px var(--shadow)}
         .option-letter{width:28px;height:28px;background:var(--mint);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;margin-right:12px;font-size:0.85em;transition:all 0.25s}
         .option.selected .option-letter{background:var(--sky);transform:scale(1.15)}
         .option-text{color:var(--text);font-size:0.95em;line-height:1.5}
-        .chart-container{background:var(--cream);border-radius:14px;padding:16px;margin-bottom:16px}
-        .section-title{color:var(--text);font-size:1em;margin-bottom:12px;font-weight:600}
         .trend-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
         .trend-stat{background:var(--cream);border-radius:10px;padding:12px;text-align:center}
         .trend-stat-value{font-size:1.3em;font-weight:700;color:var(--mint)}
@@ -95,9 +91,7 @@
         .bubble.popped{animation:bubblePop 0.4s forwards;pointer-events:none}
         @keyframes bubblePop{0%{transform:scale(1)}30%{transform:scale(1.2)}60%{transform:scale(0.8)}100%{transform:scale(0);opacity:0}}
         .bubble-hint{text-align:center;color:var(--text-light);font-size:0.85em;margin-top:14px}
-        .sound-toggle{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:0.85em;color:var(--text)}
-        .tip-card{background:linear-gradient(135deg,var(--mint-light),var(--sky-light));border-radius:14px;padding:16px;margin-bottom:16px;position:relative;overflow:hidden}
-        .tip-card::before{content:'🌿';position:absolute;top:-10px;right:-10px;font-size:4em;opacity:0.15}
+        .tip-card{background:linear-gradient(135deg,var(--mint-light),var(--sky-light));border-radius:14px;padding:16px;margin-bottom:16px}
         .tip-label{font-size:0.75em;color:#2D6A4F;font-weight:600;margin-bottom:6px}
         .tip-text{color:#1E5332;font-size:0.95em;line-height:1.6}
         .tip-refresh{font-size:0.8em;color:#2D6A4F;margin-top:10px;cursor:pointer;text-decoration:underline;background:none;border:none}
@@ -113,7 +107,6 @@
         .goal-add input:focus{border-color:var(--mint)}
         .goal-progress{background:var(--cream);border-radius:8px;height:8px;margin-top:12px;overflow:hidden}
         .goal-progress-fill{background:linear-gradient(90deg,var(--mint),var(--sky));height:100%;transition:width 0.3s}
-        .resources-section{margin-top:16px}
         .resource-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
         .resource-card{background:var(--cream);border-radius:12px;padding:14px;text-align:center;cursor:pointer;transition:all 0.2s;border:2px solid transparent}
         .resource-card:hover{border-color:var(--mint);transform:translateY(-2px)}
@@ -137,13 +130,6 @@
         .result-level{background:white;border-radius:14px;padding:16px;margin:16px 0}
         .level-name{font-size:1.15em;font-weight:600;color:var(--text);margin-bottom:6px}
         .level-desc{color:var(--text);font-size:0.95em;line-height:1.6}
-        .dimension-card{background:var(--cream);border-radius:12px;padding:14px;margin-bottom:12px}
-        .dimension-title{font-size:0.9em;font-weight:600;color:var(--text);margin-bottom:8px}
-        .dimension-bar{background:var(--cream-dark);border-radius:6px;height:10px;overflow:hidden;margin-bottom:6px}
-        .dimension-fill{height:100%;border-radius:6px;transition:width 0.5s}
-        .dimension-fill.high{background:linear-gradient(90deg,var(--mint),var(--sky))}
-        .dimension-fill.medium{background:linear-gradient(90deg,var(--peach-light),var(--lavender-light))}
-        .dimension-fill.low{background:linear-gradient(90deg,var(--peach),#E8A5A5)}
         .suggestion-section{margin-top:20px}
         .suggestion-title{font-size:1em;font-weight:600;color:var(--text);margin-bottom:12px}
         .suggestion-item{display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--cream);border-radius:12px;margin-bottom:10px;text-align:left;border-left:3px solid var(--mint)}
@@ -184,13 +170,13 @@
             <button class="btn btn-primary" id="nextBtn" style="display:none;">下一题</button>
         </div>
         <div id="trendTab" class="tab-content">
-            <h3 class="section-title">📈 情绪趋势</h3>
+            <h3 style="color:var(--text);font-size:1em;margin-bottom:12px;font-weight:600">📈 情绪趋势</h3>
             <div class="trend-stats">
                 <div class="trend-stat"><div class="trend-stat-value" id="avgScore">--</div><div class="trend-stat-label">平均分</div></div>
                 <div class="trend-stat"><div class="trend-stat-value" id="maxScore">--</div><div class="trend-stat-label">最高分</div></div>
                 <div class="trend-stat"><div class="trend-stat-value" id="totalCount">0</div><div class="trend-stat-label">评估次数</div></div>
             </div>
-            <h4 class="section-title" style="margin-top:16px">📋 历史记录</h4>
+            <h4 style="color:var(--text);font-size:1em;margin-top:16px;margin-bottom:12px;font-weight:600">📋 历史记录</h4>
             <div id="historyList"></div>
         </div>
         <div id="calendarTab" class="tab-content">
@@ -226,7 +212,7 @@
             <div class="bubble-container">
                 <div class="bubble-stats">
                     <span>🫧 已戳破: <strong id="poppedCount">0</strong>/18</span>
-                    <label class="sound-toggle"><input type="checkbox" id="soundToggle" checked> 🔊 音效</label>
+                    <label style="display:flex;align-items:center;gap:8px;font-size:0.85em;color:var(--text)"><input type="checkbox" id="soundToggle" checked> 🔊 音效</label>
                 </div>
                 <div class="bubble-grid" id="bubbleGrid"></div>
                 <p class="bubble-hint">点击气泡戳破它们，释放压力！</p>
@@ -239,16 +225,16 @@
                 <button class="tip-refresh" id="refreshTip">换一条 →</button>
             </div>
             <div class="goals-section">
-                <h4 class="section-title">🎯 目标设定 <span id="goalProgress">(0/0)</span></h4>
+                <h4 style="color:var(--text);font-size:1em;margin-bottom:12px;font-weight:600">🎯 目标设定 <span id="goalProgress">(0/0)</span></h4>
                 <div class="goal-progress"><div class="goal-progress-fill" id="goalProgressFill" style="width:0%"></div></div>
                 <div id="goalList"></div>
                 <div class="goal-add">
                     <input type="text" id="goalInput" placeholder="添加新目标...">
-                    <button class="btn btn-small btn-primary" id="addGoal">添加</button>
+                    <button class="btn btn-primary" id="addGoal" style="width:auto;padding:10px 20px">添加</button>
                 </div>
             </div>
-            <div class="resources-section">
-                <h4 class="section-title">📚 资源推荐</h4>
+            <div style="margin-top:16px">
+                <h4 style="color:var(--text);font-size:1em;margin-bottom:12px;font-weight:600">📚 资源推荐</h4>
                 <div class="resource-grid">
                     <div class="resource-card" data-res="read"><div class="resource-icon">📖</div><div class="resource-title">阅读</div></div>
                     <div class="resource-card" data-res="app"><div class="resource-icon">📱</div><div class="resource-title">APP</div></div>
@@ -278,62 +264,7 @@
                 <div class="modal-icon">📚</div>
                 <h3 class="modal-title" id="resourcesTitle">资源推荐</h3>
             </div>
-            <div class="resource-list" id="resourcesBody"></div>
+            <div id="resourcesBody"></div>
             <button class="btn btn-secondary" id="closeResources" style="margin-top:16px">关闭</button>
         </div>
     </div>
-    <script>
-        var roles=[
-            {id:'workplace',name:'职场女性',icon:'💼',desc:'工作压力大，时间紧张',color:'#7DD3C0'},
-            {id:'homemaker',name:'家庭主妇',icon:'🏠',desc:'家庭事务繁重',color:'#FFB5A7'},
-            {id:'student',name:'学生党',icon:'📚',desc:'学业压力繁重',color:'#B8A9C9'},
-            {id:'freelancer',name:'自由职业',icon:'🌟',desc:'生活不规律',color:'#A8D8EA'},
-            {id:'parent',name:'新手妈妈',icon:'👶',desc:'育儿压力与挑战',color:'#D4C5E8'},
-            {id:'career',name:'创业者',icon:'🚀',desc:'事业与生活平衡',color:'#FFD3C9'}
-        ];
-        var baseQuestions=[
-            {q:"近期你的情绪状态是？",hint:"选择最符合你实际情况的描述",dim:"情绪",o:["积极乐观，情绪稳定","总体还不错，偶尔有些低落","经常感到焦虑或情绪低落","大部分时间感到沮丧或无助"]},
-            {q:"近期你感受到的压力程度？",dim:"压力",o:["压力适中，可以应对","有些压力，但能承受","压力较大，感到有些吃力","压力过重，快喘不过气"]},
-            {q:"你的精力和活力水平？",dim:"精力",o:["精力充沛，充满活力","精力还可以，能应付日常","经常感到疲惫乏力","做什么都提不起劲"]},
-            {q:"你的睡眠质量如何？",dim:"睡眠",o:["睡眠良好，精力充沛","睡眠还可以，偶有失眠","经常失眠或睡眠不足","严重失眠，影响生活"]},
-            {q:"对自己和生活满意度？",dim:"满意",o:["很满意，感到幸福","还算满意","不太满意，有些迷茫","很不满意，需要改变"]}
-        ];
-        var roleQuestions={
-            workplace:[
-                {q:"工作让你感到疲惫的原因主要是？",dim:"工作",o:["工作量太大","人际关系复杂","职业发展迷茫","工作与生活无法平衡"]},
-                {q:"下班后你能完全放松吗？",dim:"放松",o:["可以很好地切换状态","偶尔会想工作的事","很难完全放松","总是惦记工作"]}
-            ],
-            homemaker:[
-                {q:"家务劳动让你感到？",dim:"家务",o:["有成就感","平淡无感","有些疲惫","非常疲惫"]},
-                {q:"家人对你的付出理解吗？",dim:"认可",o:["非常理解","基本理解","不太理解","完全不理解"]}
-            ],
-            student:[
-                {q:"学业压力主要来自？",dim:"学业",o:["考试焦虑","课业负担","对未来迷茫","peer pressure"]},
-                {q:"你对自己的学业成绩满意吗？",dim:"成绩",o:["非常满意","比较满意","不太满意","很不满意"]}
-            ],
-            freelancer:[
-                {q:"你的收入稳定性如何？",dim:"收入",o:["稳定且可观","基本稳定","不太稳定","很不稳定"]},
-                {q:"你每天工作几个小时？",dim:"工作时长",o:["6小时以下","6-8小时","8-10小时","10小时以上"]}
-            ],
-            parent:[
-                {q:"育儿过程中最大的挑战是？",dim:"育儿",o:["孩子不听话","缺乏私人时间","教育理念分歧","身体疲惫"]},
-                {q:"你给自己留出独处时间吗？",dim:"自我时间",o:["每天都有","偶尔有","很少","几乎没有"]}
-            ],
-            career:[
-                {q:"创业给你带来的最大压力是？",dim:"创业压力",o:["资金压力","团队管理","市场不确定性","家庭平衡"]},
-                {q:"你如何平衡工作和生活？",dim:"平衡",o:["做得很好","还行","很差","完全失衡"]}
-            ]
-        };
-        var roleSuggestions={
-            workplace:["学会在工作时专注，下班后彻底放松","建立工作边界，学会说「不」","利用午休时间短暂休息","周末培养与工作无关的兴趣爱好"],
-            homemaker:["家务分工可以让家人一起参与","每天给自己30分钟独处时间","不必追求完美，适当降低标准","寻求家人的理解和支持"],
-            student:["制定合理的学习计划，避免临时抱佛脚","适当运动有助于缓解考试焦虑","和同学互相支持，不要孤军奋战","保证充足睡眠，不要熬夜"],
-            freelancer:["建立固定的作息时间表","设立明确的工作时间和休息时间","建立稳定的社会支持网络","学会接受不确定性"],
-            parent:["育儿不必追求完美，足够好就好","加入妈妈互助群体，分享经验","孩子午睡时给自己放个假","必要时寻求专业帮助"],
-            career:["学会授权，不必事事亲力亲为","保持与家人的良好沟通","适当运动保持身心健康","定期复盘，调整策略"]
-        };
-        var tips=[
-            "对自己不要太苛刻，接受不完美是心理健康的标志。","学会说「不」，保护自己的时间和精力。","每天给自己一点独处的时间。","适度运动可以帮助改善情绪。","保持规律作息对心理健康很重要。","与信任的人分享感受可以减轻压力。","允许自己休息，这不是偷懒。","小小的进步也值得庆祝。","不要把所有问题都自己扛。","接纳负面情绪，它们也是正常的一部分。","培养一个喜欢的兴趣爱好。","减少刷手机的时间，多感受现实生活。","今天的你已经做得很好了。","对自己温柔一点，像对朋友那样。","记住：寻求帮助是勇敢的表现。"
-        ];
-        var resources={
-            read:{title:"推荐阅读",list:["《情绪急救》
