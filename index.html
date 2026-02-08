@@ -1451,7 +1451,10 @@
                 return;
             }
             
+            // 隐藏欢迎遮罩层
             el.welcomeOverlay.classList.add('hidden');
+            el.welcomeOverlay.style.display = 'none';
+            
             state.q = 0;
             state.a = [];
             
