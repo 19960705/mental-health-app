@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>女性心理健康自评</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,'Segoe UI',sans-serif;background:linear-gradient(135deg,#fff5f5 0%,#ffe4e6 50%,#fce7f3 100%);min-height:100vh;padding:20px;padding-top:40px}
+        .container{background:white;border-radius:24px;box-shadow:0 10px 40px rgba(244,114,182,0.15);max-width:500px;width:100%;margin:0 auto;padding:24px}
+        h1{color:#be185d;font-size:1.5em;text-align:center;margin-bottom:8px}
+        .subtitle{color:#9ca3af;text-align:center;font-size:0.9em;margin-bottom:16px}
+        .privacy-badge{display:inline-flex;align-items:center;gap:6px;background:#f0fdf4;color:#166534;padding:6px 14px;border-radius:20px;font-size:0.8em;margin-bottom:20px}
+        .nav-tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+        .nav-tab{flex:1;min-width:60px;padding:10px 6px;border:none;border-radius:10px;font-size:0.72em;cursor:pointer;transition:all 0.3s;background:#f3f4f6;color:#6b7280;text-align:center}
+        .nav-tab.active{background:linear-gradient(135deg,#f472b6,#ec4899);color:white;transform:scale(1.05);box-shadow:0 4px 15px rgba(236,72,153,0.3)}
+        .nav-tab:hover:not(.active){background:#e5e7eb;transform:translateY(-2px)}
+        .tab-content{display:none;animation:fadeIn 0.4s}
+        .tab-content.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+        .welcome-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#fce7f3,#fbcfe8,#ffe4e6);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px}
+        .welcome-overlay.hidden{display:none}
+        .welcome-content{background:white;border-radius:28px;padding:32px;max-width:400px;width:100%;box-shadow:0 20px 60px rgba(244,114,182,0.25);animation:slideUp 0.5s}
+        @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+        .welcome-icon{font-size:3.5em;text-align:center;margin-bottom:12px}
+        .welcome-title{font-size:1.4em;font-weight:700;color:#be185d;text-align:center;margin-bottom:20px}
+        .welcome-features{list-style:none;margin-bottom:20px}
+        .welcome-features li{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f3f4f6;color:#4b5563;font-size:0.85em}
+        .welcome-features .icon{width:32px;height:32px;background:linear-gradient(135deg,#f472b6,#ec4899);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-size:1em;flex-shrink:0}
+        .welcome-btn{width:100%;padding:14px 20px;border:none;border-radius:12px;font-size:1em;cursor:pointer;font-weight:600;background:linear-gradient(135deg,#f472b6,#ec4899);color:white;box-shadow:0 6px 20px rgba(236,72,153,0.35)}
+        .dont-show{display:flex;align-items:center;gap:8px;margin-bottom:16px;font-size:0.85em;color:#6b7280}
+        .progress-bar{background:#e5e7eb;border-radius:10px;height:8px;margin-bottom:16px;overflow:hidden}
+        .progress-fill{background:linear-gradient(90deg,#f472b6,#ec4899);height:100%;border-radius:10px;transition:width 0.4s}
+        .progress-text{font-size:0.8em;color:#9ca3af;text-align:center;margin-bottom:8px}
+        .question-card{background:linear-gradient(135deg,#fefce8,#fef9c3);border-radius:16px;padding:20px;margin-bottom:16px}
+        .question-number{color:#f472b6;font-size:0.85em;margin-bottom:8px;font-weight:600}
+        .question-text{color:#374151;font-size:1.05em;margin-bottom:16px;line-height:1.6;font-weight:500}
+        .question-hint{color:#9ca3af;font-size:0.8em;margin-bottom:12px;font-style:italic}
+        .option{display:flex;align-items:center;padding:14px 16px;background:white;border:2px solid #e5e7eb;border-radius:12px;margin-bottom:10px;cursor:pointer;transition:all 0.25s}
+        .option:hover{border-color:#f472b6;background:#fff1f2;transform:translateX(6px)}
+        .option.selected{border-color:#ec4899;background:linear-gradient(135deg,#fff1f2,#ffe4e6);transform:translateX(12px);box-shadow:0 6px 20px rgba(236,72,153,0.25)}
+        .option-letter{width:28px;height:28px;background:#fce7f3;color:#be185d;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;margin-right:12px;font-size:0.85em;transition:all 0.25s}
+        .option.selected .option-letter{background:#ec4899;color:white;transform:scale(1.15)}
+        .option-text{color:#4b5563;font-size:0.95em;line-height:1.5}
+        .btn{width:100%;padding:16px 24px;border:none;border-radius:14px;font-size:1em;cursor:pointer;transition:all 0.3s;font-weight:600;margin-bottom:10px}
+        .btn-primary{background:linear-gradient(135deg,#f472b6,#ec4899);color:white;box-shadow:0 6px 20px rgba(236,72,153,0.35)}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(236,72,153,0.4)}
+        .btn-secondary{background:#f3f4f6;color:#6b7280}
+        .btn-small{padding:10px 16px;font-size:0.9em;width:auto}
+        .chart-container{background:#f9fafb;border-radius:14px;padding:16px;margin-bottom:16px}
+        .chart-canvas{width:100%;height:180px;background:white;border-radius:10px}
+        .section-title{color:#374151;font-size:1em;margin-bottom:12px;font-weight:600}
+        .trend-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+        .trend-stat{background:#f9fafb;border-radius:10px;padding:12px;text-align:center}
+        .trend-stat-value{font-size:1.3em;font-weight:700;color:#be185d}
+        .trend-stat-label{font-size:0.75em;color:#9ca3af}
+        .radar-container{background:#f9fafb;border-radius:14px;padding:16px;margin-bottom:16px;text-align:center}
+        .radar-canvas{width:200px;height:200px;margin:0 auto}
+        .calendar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+        .calendar-month{font-weight:600;color:#374151;font-size:0.9em}
+        .calendar-nav-btn{width:32px;height:32px;border:none;border-radius:8px;background:#f3f4f6;cursor:pointer;font-size:0.9em}
+        .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+        .calendar-day-header{text-align:center;font-size:0.7em;color:#9ca3af;padding:6px 0;font-weight:500}
+        .calendar-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:0.8em;background:#f9fafb;transition:all 0.2s}
+        .calendar-day:hover{background:#e5e7eb;transform:scale(1.1)}
+        .calendar-day-today{background:#fce7f3;color:#be185d;font-weight:700;border:2px solid #ec4899}
+        .calendar-day-1{background:#dcfce7;color:#166534}
+        .calendar-day-2{background:#d9f99d;color:#3f6212}
+        .calendar-day-3{background:#fef9c3;color:#854d0e}
+        .calendar-day-4{background:#fed7aa;color:#9a3412}
+        .calendar-day-5{background:#fecaca;color:#991b1b}
+        .legend{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:16px;font-size:0.7em;color:#6b7280}
+        .legend span{display:flex;align-items:center;gap:4px}
+        .legend-dot{width:10px;height:10px;border-radius:3px}
+        .breathing-container{text-align:center;padding:20px}
+        .breathing-circle{width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,#fce7f3,#fbcfe8);margin:0 auto 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform 4s cubic-bezier(0.4,0,0.2,1);box-shadow:0 10px 40px rgba(236,72,153,0.25)}
+        .breathing-circle.expand{transform:scale(1.3)}
+        .breathing-text{font-size:1.4em;font-weight:700;color:#be185d}
+        .breathing-sub{font-size:0.85em;color:#9ca3af;margin-top:6px}
+        .breathing-controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+        .breath-preset{padding:10px 18px;border:2px solid #e5e7eb;border-radius:25px;background:white;cursor:pointer;font-size:0.9em;transition:all 0.2s}
+        .breath-preset.active{border-color:#ec4899;background:linear-gradient(135deg,#fff1f2,#ffe4e6);color:#be185d;font-weight:600}
+        .breath-guide{background:#f9fafb;border-radius:12px;padding:14px;margin-top:16px;font-size:0.85em;color:#6b7280;line-height:1.7}
+        .bubble-container{background:#f9fafb;border-radius:14px;padding:16px;min-height:280px}
+        .bubble-stats{display:flex;justify-content:space-between;margin-bottom:16px;font-size:0.9em;color:#6b7280;background:white;padding:12px 16px;border-radius:10px}
+        .bubble-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+        .bubble{aspect-ratio:1;border-radius:50%;background:linear-gradient(135deg,#f472b6,#ec4899);cursor:pointer;transition:all 0.15s;box-shadow:0 4px 15px rgba(236,72,153,0.3);position:relative;border:none}
+        .bubble::before{content:'';position:absolute;top:15%;left:20%;width:25%;height:25%;background:rgba(255,255,255,0.5);border-radius:50%}
+        .bubble:active{transform:scale(0.92)}
+        .bubble.popped{animation:bubblePop 0.4s forwards;pointer-events:none}
+        @keyframes bubblePop{0%{transform:scale(1)}30%{transform:scale(1.2)}60%{transform:scale(0.8)}100%{transform:scale(0);opacity:0}}
+        .bubble-hint{text-align:center;color:#9ca3af;font-size:0.85em;margin-top:14px}
+        .sound-toggle{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:0.85em;color:#6b7280}
+        .goals-section{background:#f9fafb;border-radius:14px;padding:16px;margin-bottom:16px}
+        .goal-item{display:flex;align-items:center;gap:12px;padding:12px;background:white;border-radius:10px;margin-bottom:10px}
+        .goal-checkbox{width:22px;height:22px;border:2px solid #e5e7eb;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .goal-checkbox.checked{background:#ec4899;border-color:#ec4899;color:white}
+        .goal-text{flex:1;color:#4b5563;font-size:0.9em}
+        .goal-text.completed{text-decoration:line-through;color:#9ca3af}
+        .goal-delete{width:24px;height:24px;border:none;background:none;color:#9ca3af;cursor:pointer;font-size:1.2em}
+        .goal-add{display:flex;gap:10px;margin-top:12px}
+        .goal-add input{flex:1;padding:10px 14px;border:2px solid #e5e7eb;border-radius:10px;font-size:0.9em;outline:none}
+        .goal-progress{background:#e5e7eb;border-radius:8px;height:8px;margin-top:12px;overflow:hidden}
+        .goal-progress-fill{background:linear-gradient(90deg,#f472b6,#ec4899);height:100%;transition:width 0.3s}
+        .tip-card{background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:14px;padding:16px;margin-bottom:16px;position:relative;overflow:hidden}
+        .tip-card::before{content:'💡';position:absolute;top:-10px;right:-10px;font-size:4em;opacity:0.1}
+        .tip-label{font-size:0.75em;color:#92400e;font-weight:600;margin-bottom:6px}
+        .tip-text{color:#78350f;font-size:0.95em;line-height:1.6}
+        .tip-refresh{font-size:0.8em;color:#92400e;margin-top:10px;cursor:pointer;text-decoration:underline;background:none;border:none}
+        .resources-section{margin-top:16px}
+        .resource-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+        .resource-card{background:#f9fafb;border-radius:12px;padding:14px;text-align:center;cursor:pointer;transition:all 0.2s;border:2px solid transparent}
+        .resource-card:hover{border-color:#f472b6;transform:translateY(-2px)}
+        .resource-icon{font-size:1.8em;margin-bottom:6px}
+        .resource-title{font-size:0.85em;color:#374151;font-weight:500}
+        .hotline-card{background:linear-gradient(135deg,#fee2e2,#fecaca);border-radius:12px;padding:14px;text-align:center}
+        .hotline-title{color:#991b1b;font-size:0.9em;font-weight:600;margin-bottom:8px}
+        .hotline-number{color:#dc2626;font-size:1.3em;font-weight:700}
+        .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
+        .modal.show{display:flex}
+        .modal-content{background:white;border-radius:24px;padding:24px;max-width:420px;width:100%;max-height:85vh;overflow-y:auto;animation:modalIn 0.3s}
+        @keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+        .modal-header{text-align:center;margin-bottom:20px}
+        .modal-icon{font-size:3em;margin-bottom:10px}
+        .modal-title{font-size:1.3em;font-weight:700;color:#374151;margin-bottom:4px}
+        .modal-subtitle{color:#9ca3af;font-size:0.9em}
+        .result-card{background:linear-gradient(135deg,#fce7f3,#fbcfe8);border-radius:20px;padding:24px;margin-bottom:20px;text-align:center}
+        .score-display{display:flex;align-items:baseline;justify-content:center;gap:8px}
+        .score-number{font-size:3.5em;font-weight:800;color:#be185d;line-height:1}
+        .score-label{color:#be185d;font-size:1em;opacity:0.8}
+        .result-level{background:white;border-radius:14px;padding:16px;margin:16px 0}
+        .level-name{font-size:1.15em;font-weight:600;color:#374151;margin-bottom:6px}
+        .level-desc{color:#6b7280;font-size:0.95em;line-height:1.6}
+        .dimension-card{background:#f9fafb;border-radius:12px;padding:14px;margin-bottom:12px}
+        .dimension-title{font-size:0.9em;font-weight:600;color:#374151;margin-bottom:8px}
+        .dimension-bar{background:#e5e7eb;border-radius:6px;height:10px;overflow:hidden;margin-bottom:6px}
+        .dimension-fill{height:100%;border-radius:6px;transition:width 0.5s}
+        .dimension-fill.high{background:linear-gradient(90deg,#86efac,#4ade80)}
+        .dimension-fill.medium{background:linear-gradient(90deg,#fde047,#facc15)}
+        .dimension-fill.low{background:linear-gradient(90deg,#fca5a5,#f87171)}
+        .dimension-value{font-size:0.8em;color:#6b7280;text-align:right}
+        .suggestion-section{margin-top:20px}
+        .suggestion-title{font-size:1em;font-weight:600;color:#374151;margin-bottom:12px}
+        .suggestion-item{display:flex;align-items:flex-start;gap:12px;padding:14px;background:#f9fafb;border-radius:12px;margin-bottom:10px;text-align:left;border-left:3px solid #ec4899}
+        .suggestion-icon{width:24px;height:24px;background:#ec4899;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:0.8em;flex-shrink:0}
+        .suggestion-text{color:#4b5563;font-size:0.9em;line-height:1.6}
+        .disclaimer{background:#fef3c7;border-radius:12px;padding:14px;font-size:0.85em;color:#92400e;line-height:1.6;margin-top:16px;text-align:center}
+        .share-buttons{display:flex;gap:10px;margin-top:16px}
+        .share-btn{flex:1;padding:12px;border:none;border-radius:10px;cursor:pointer;font-size:0.9em;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px;background:#f3f4f6;color:#374151}
+        .share-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+        .history-item{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:#f9fafb;border-radius:10px;margin-bottom:8px;transition:all 0.2s}
+        .history-item:hover{background:#f3f4f6;transform:translateX(4px)}
+        .history-date{font-size:0.85em;color:#6b7280}
+        .history-score{font-weight:600;color:#374151}
+        .comparison-container{background:#f9fafb;border-radius:14px;padding:16px}
+        .comparison-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #e5e7eb}
+        .comparison-label{color:#6b7280;font-size:0.9em}
+        .comparison-values{display:flex;align-items:center;gap:8px}
+        .comparison-old{color:#9ca3af;font-size:0.85em;text-decoration:line-through}
+        .comparison-new{font-weight:600;color:#374151}
+        .comparison-change{font-size:0.8em;padding:2px 8px;border-radius:10px}
+        .comparison-change.up{background:#dcfce7;color:#166534}
+        .comparison-change.down{background:#fecaca;color:#991b1b}
+        .comparison-change.same{background:#f3f4f6;color:#6b7280}
+        .resource-list{padding:0;list-style:none}
+        .resource-list li{padding:12px;background:#f9fafb;border-radius:10px;margin-bottom:8px;font-size:0.9em;color:#374151}
+        .resource-list li strong{color:#be185d}
+        @media(max-width:480px){.container{padding:18px}.breathing-circle{width:140px;height:140px}.bubble-grid{grid-template-columns:repeat(5,1fr)}}
+    </style>
+</head>
+<body>
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-content">
+            <div class="welcome-icon">🌸</div>
+            <h2 class="welcome-title">女性心理健康自评</h2>
+            <ul class="welcome-features">
+                <li><span class="icon">📝</span>快速评估心理状态</li>
+                <li><span class="icon">📈</span>追踪情绪变化趋势</li>
+                <li><span class="icon">🌬️</span>专业呼吸练习</li>
+                <li><span class="icon">🫧</span>解压放松小游戏</li>
+                <li><span class="icon">🎯</span>设定改善目标</li>
+                <li><span class="icon">💡</span>每日心理小贴士</li>
+            </ul>
+            <label class="dont-show"><input type="checkbox" id="dontShowAgain"> 不再显示此页面</label>
+            <button class="welcome-btn" onclick="startApp()">开始使用</button>
+        </div>
+    </div>
+    <div class="container">
+        <h1>女性心理健康自评</h1>
+        <p class="subtitle">了解自己，关爱自己</p>
+        <div class="privacy-badge">🔒 数据仅本地存储</div>
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('assessment')">自评</button>
+            <button class="nav-tab" onclick="showTab('trend')">趋势</button>
+            <button class="nav-tab" onclick="showTab('calendar')">日历</button>
+            <button class="nav-tab" onclick="showTab('breath')">呼吸</button>
+            <button class="nav-tab" onclick="showTab('bubble')">解压</button>
+            <button class="nav-tab" onclick="showTab('more')">更多</button>
+        </div>
+        <div id="assessmentTab" class="tab-content active"><div id="questionsContainer"></div><button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" style="display:none;">下一题</button></div>
+        <div id="trendTab" class="tab-content">
+            <div class="section-title">分数趋势</div>
+            <div class="trend-stats">
+                <div class="trend-stat"><div class="trend-stat-value" id="statAvg">--</div><div class="trend-stat-label">平均分</div></div>
+                <div class="trend-stat"><div class="trend-stat-value" id="statBest">--</div><div class="trend-stat-label">最佳</div></div>
+                <div class="trend-stat"><div class="trend-stat-value" id="statCount">--</div><div class="trend-stat-label">次数</div></div>
+            </div>
+            <div class="chart-container"><canvas id="trendChart" class="chart-canvas"></canvas></div>
+            <div class="section-title" style="margin-top:16px">历史记录 <button class="btn btn-small btn-secondary" style="float:right" onclick="showHistoryComparison()">对比</button></div>
+            <div id="historyList"></div>
+        </div>
+        <div id="calendarTab" class="tab-content">
+            <div class="section-title">情绪日历</div>
+            <div class="calendar-header"><button class="calendar-nav-btn" onclick="changeMonth(-1)">◀</button><div class="calendar-month" id="calendarMonth"></div><button class="calendar-nav-btn" onclick="changeMonth(1)">▶</button></div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+            <div class="legend"><span><div class="legend-dot" style="background:#dcfce7"></div>良好</span><span><div class="legend-dot" style="background:#d9f99d"></div>不错</span><span><div class="legend-dot" style="background:#fef9c3"></div>一般</span><span><div class="legend-dot" style="background:#fed7aa"></div>较差</span><span><div class="legend-dot" style="background:#fecaca"></div>需关注</span></div>
+        </div>
+        <div id="breathTab" class="tab-content">
+            <div class="section-title">呼吸练习</div>
+            <div class="breathing-container">
+                <div class="breathing-circle" id="breathingCircle"><div class="breathing-text" id="breathingText">准备</div><div class="breathing-sub" id="breathingSub">点击开始</div></div>
+                <div class="breathing-controls"><button class="breath-preset active" onclick="setBreathMode(4)">4-7-8</button><button class="breath-preset" onclick="setBreathMode(5)">5-5</button><button class="breath-preset" onclick="setBreathMode(6)">6-6</button></div>
+                <button class="btn btn-primary" id="breathBtn" onclick="toggleBreathing()">开始练习</button>
+                <div class="breath-guide"><strong>4-7-8呼吸：</strong>吸气4秒→屏息7秒→呼气8秒<br>放松神经、改善睡眠、缓解焦虑</div>
+            </div>
+        </div>
+        <div id="bubbleTab" class="tab-content">
+            <div class="section-title">解压气泡纸</div>
+            <div class="sound-toggle"><input type="checkbox" id="soundToggle"><label for="soundToggle">音效反馈</label></div>
+            <div class="bubble-container"><div class="bubble-stats"><span>已戳破: <strong id="poppedCount">0</strong>/18</span><span>用时: <strong id="popTime">0</strong>秒</span></div><div class="bubble-grid" id="bubbleGrid"></div><div class="bubble-hint">点击气泡戳破它，超解压！</div></div>
+            <button class="btn btn-secondary" onclick="resetBubbles()">重新开始</button>
+        </div>
+        <div id="moreTab" class="tab-content">
+            <div class="section-title">今日小贴士</div>
+            <div class="tip-card"><div class="tip-label">💡 心理健康知识</div><div class="tip-text" id="tipText"></div><button class="tip-refresh" onclick="refreshTip()">换一条 →</button></div>
+            <div class="section-title" style="margin-top:16px">五维平衡</div>
+            <div class="radar-container"><canvas id="radarChart" class="radar-canvas"></canvas></div>
+            <div class="goals-section">
+                <div class="section-title">我的改善目标</div>
+                <div id="goalsList"></div>
+                <div class="goal-progress"><div class="goal-progress-fill" id="goalProgress" style="width:0%"></div></div>
+                <div class="goal-add"><input type="text" id="goalInput" placeholder="添加新目标..." onkeypress="if(event.key==='Enter')addGoal()"><button class="btn btn-small btn-primary" onclick="addGoal()">添加</button></div>
+            </div>
+            <div class="resources-section">
+                <div class="section-title">资源库</div>
+                <div class="resource-grid">
+                    <div class="resource-card" onclick="showResources('reading')"><div class="resource-icon">📚</div><div class="resource-title">推荐阅读</div></div>
+                    <div class="resource-card" onclick="showResources('apps')"><div class="resource-icon">📱</div><div class="resource-title">优质APP</div></div>
+                    <div class="resource-card" onclick="showResources('video')"><div class="resource-icon">🎬</div><div class="resource-title">视频课程</div></div>
+                    <div class="resource-card" onclick="showResources('help')"><div class="resource-icon">🤝</div><div class="resource-title">专业帮助</div></div>
+                </div>
+                <div class="hotline-card"><div class="hotline-title">全国心理援助热线</div><div class="hotline-number">400-161-9995</div><div style="font-size:0.8em;color:#991b1b;margin-top:6px">24小时免费服务</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="resultModal"><div class="modal-content"><div class="modal-header"><div class="modal-icon">💜</div><div class="modal-title">评估结果</div><div class="modal-subtitle" id="resultDate"></div></div><div id="modalBody"></div><div class="share-buttons"><button class="share-btn" onclick="saveResultAsImage()">📥 保存图片</button></div><button class="btn btn-primary" onclick="closeModal()">我知道了</button></div></div>
+    <div class="modal" id="comparisonModal"><div class="modal-content"><div class="modal-header"><div class="modal-icon">📊</div><div class="modal-title">历史对比</div></div><div id="comparisonBody"></div><button class="btn btn-secondary" onclick="closeComparisonModal()">关闭</button></div></div>
+    <div class="modal" id="resourcesModal"><div class="modal-content"><div class="modal-header"><div class="modal-icon" id="resourceIcon">📚</div><div class="modal-title" id="resourceTitle">推荐阅读</div></div><div id="resourcesBody"></div><button class="btn btn-secondary" onclick="closeResourcesModal()">关闭</button></div></div>
+    <script>
+    /* ========== 配置 ========== */
+    var CONFIG = {
+        QUESTIONS: [
+            {q:"过去两周，你大多数时候的情绪状态是？",hint:"选择最符合你实际情况的描述",dim:"mood",o:["积极乐观，情绪稳定","总体还不错，偶尔有些低落","经常感到焦虑或情绪低落","大部分时间感到沮丧或无助"]},
+            {q:"你的睡眠质量如何？",hint:"包括入睡、睡眠质量和醒后状态",dim:"sleep",o:["睡眠很好，每天精神充沛","睡眠还可以，偶尔失眠","经常失眠或睡眠质量差","严重失眠，已经影响日常生活"]},
+            {q:"近期你感受到的压力程度？",hint:"来自工作、家庭、人际关系等",dim:"stress",o:["压力适中，可以应对","有些压力，但能承受","压力较大，感到有些吃力","压力过重，快喘不过气"]},
+            {q:"你的精力和活力水平？",hint:"日常工作和生活中的状态",dim:"energy",o:["精力充沛，充满活力","精力还可以，能应付日常","经常感到疲惫乏力","做什么都提不起劲"]},
+            {q:"你与朋友/家人的社交联系？",hint:"指情感上的交流和支持",dim:"social",o:["有很好的社交支持，有人倾诉","有一些朋友可以交流","较少主动联系他人","感到孤独，缺乏支持"]},
+            {q:"面对困难或挫折时，你通常？",hint:"你处理问题的方式",dim:"stress",o:["积极面对，寻找解决方案","能慢慢调整心态","感到困扰，需要时间消化","容易陷入负面情绪"]},
+            {q:"你对目前生活满意度？",hint:"综合各方面的主观感受",dim:"mood",o:["很满意，感到幸福","还算满意","不太满意，有些迷茫","很不满意，需要改变"]},
+            {q:"你有尝试过放松或减压的方式吗？",hint:"如运动、冥想、兴趣爱好等",dim:"energy",o:["有固定的习惯","偶尔会做一些","想但没时间或动力","完全没有"]}
+        ],
+        DIM_NAMES: {mood:'情绪状态',sleep:'睡眠质量',stress:'压力水平',energy:'精力活力',social:'社交支持'},
+        TIPS: [
+            "每天保证7-8小时充足睡眠，对心理健康至关重要。",
+            "适度运动可释放压力，产生内啡肽，让心情变好。",
+            "深呼吸是最简单有效的放松技巧，随时可以练习。",
+            "保持社交联系很重要，简短的聊天也能缓解孤独感。",
+            "学会说「不」，保护自己的时间和精力。",
+            "写日记可以帮助整理思绪，记录情绪变化。",
+            "给自己留一些独处时间，用来充电和放松。",
+            "对自己不要太苛刻，接受不完美是心理健康的标志。",
+            "减少社交媒体使用时间，它可能增加焦虑感。",
+            "均衡饮食影响情绪，omega-3等营养素支持大脑健康。",
+            "练习感恩，每天写下3件让你感激的小事。",
+            "设定切实可行的目标，将大任务分解成小步骤。",
+            "亲近大自然可以减压，去户外走走吧。",
+            "识别压力触发点，了解什么让你感到压力。",
+            "保持充足水分，即使轻度脱水也会影响情绪。"
+        ],
+        RESOURCES: {
+            reading: {icon:'📚',title:'推荐阅读',items:['《也许你该找个人聊聊》- 洛莉·戈特利布','《蛤蟆先生去看心理医生》- 罗伯特·戴博德','《被讨厌的勇气》- 岸见一郎','《自卑与超越》- 阿德勒','《少有人走的路》- M·斯科特·派克']},
+            apps: {icon:'📱',title:'优质APP',items:['潮汐 - 专注冥想与睡眠','小睡眠 - 白噪音与冥想','简单心理 - 心理咨询平台','壹心理 - 心理测试与文章','Now冥想 - 正念冥想指导']},
+            video: {icon:'🎬',title:'视频课程',items:['TED演讲 - 关于心理健康的演讲','B站 - 心理学入门系列','网易公开课 - 积极心理学','喜马拉雅 - 冥想引导音频','得到 - 心理学相关课程']},
+            help: {icon:'🤝',title:'专业帮助',items:['<strong>全国心理援助热线</strong>: 400-161-9995','<strong>北京心理危机研究中心</strong>: 010-82951332','<strong>希望24热线</strong>: 400-161-9995','各大医院心理科或精神卫生中心','正规心理咨询机构']}
+        }
+    };
+    /* ========== 状态 ========== */
+    var S = {
+        answers: [],
+        dims: {mood:0,sleep:0,stress:0,energy:0,social:0},
+        currentQ: 0,
+        history: JSON.parse(localStorage.getItem('mhHistory')||'[]'),
+        goals: JSON.parse(localStorage.getItem('mhGoals')||'[]'),
+        calMonth: new Date().getMonth(),
+        calYear: new Date().getFullYear(),
+        breathTimer: null,
+        breathMode: 4,
+        isBreathing: false,
+        popped: 0,
+        bubbleTimer: null,
+        bubbleStart: null,
+        tipIdx: 0,
+        audioCtx: null
+    };
+    /* ========== 初始化 ========== */
+    function init(){
+        if(localStorage.getItem('mhWelcome')==='false')document.getElementById('welcomeOverlay').classList.add('hidden');
+        renderQuestions();
+        updateHistory();
+        refreshTip();
+        renderGoals();
+    }
+    function startApp(){
+        if(document.getElementById('dontShowAgain').checked)localStorage.setItem('mhWelcome','false');
+        document.getElementById('welcomeOverlay').classList.add('hidden');
+    }
+    /* ========== Tab切换 ========== */
+    function showTab(tab){
+        document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active')});
+        document.querySelectorAll('.nav-tab').forEach(function(b){b.classList.remove('active')});
+        document.getElementById(tab+'Tab').classList.add('active');
+        document.querySelectorAll('.nav-tab').forEach(function(b){if(b.textContent.indexOf(tab.charAt(0).toUpperCase())>-1||b.getAttribute('onclick').indexOf(tab)>-1)b.classList.add('active')});
+        if(tab==='trend'){drawTrendChart();updateStats()}
+        if(tab==='calendar')renderCalendar();
+        if(tab==='bubble')initBubbles();
+        if(tab==='more'){renderRadarChart();renderGoals()}
+    }
+    /* ========== 答题 ========== */
+    function renderQuestions(){
+        var q=CONFIG.QUESTIONS[S.currentQ];
+        var progress=Math.round((S.currentQ/CONFIG.QUESTIONS.length)*100);
+        var html='<div class="progress-bar"><div class="progress-fill" style="width:'+progress+'%"></div></div>';
+        html+='<div class="progress-text">'+(S.currentQ+1)+' / '+CONFIG.QUESTIONS.length+'</div>';
+        html+='<div class="question-card"><div class="question-number">问题 '+(S.currentQ+1)+'</div>';
+        html+='<div class="question-text">'+q.q+'</div><div class="question-hint">'+q.hint+'</div>';
+        for(var j=0;j<q.o.length;j++){
+            html+='<div class="option" onclick="selectOption('+j+',this)"><div class="option-letter">'+String.fromCharCode(65+j)+'</div><div class="option-text">'+q.o[j]+'</div></div>';
+        }
+        html+='</div>';
+        document.getElementById('questionsContainer').innerHTML=html;
+        document.getElementById('nextBtn').style.display='none';
+    }
+    function selectOption(idx,el){
+        S.answers[S.currentQ]=idx+1;
+        S.dims[CONFIG.QUESTIONS[S.currentQ].dim]+=idx+1;
+        el.parentElement.querySelectorAll('.option').forEach(function(o){o.classList.remove('selected')});
+        el.classList.add('selected');
+        document.getElementById('nextBtn').style.display='block';
+        document.getElementById('nextBtn').textContent=S.currentQ===CONFIG.QUESTIONS.length-1?'查看分析报告':'下一题';
+    }
+    function nextQuestion(){
+        if(S.currentQ<CONFIG.QUESTIONS.length-1){S.currentQ++;renderQuestions()}
+        else showResult();
+    }
+    function resetAssessment(){
+        S.answers=[];S.dims={mood:0,sleep:0,stress:0,energy:0,social:0};S.currentQ=0;
+        renderQuestions();document.getElementById('nextBtn').style.display='none';
+    }
+    /* ========== 结果 ========== */
+    function showResult(){
+        var total=S.answers.reduce(function(a,b){return a+b},0);
+        var max=CONFIG.QUESTIONS.length*4;
+        var ratio=total/max;
+        var level,desc,icon,suggs;
+        if(ratio<=0.35){level="状态良好";icon="🌟";desc="你的心理状态很不错！继续保持。";suggs=["保持规律作息和运动习惯","继续培养有益的兴趣爱好","维持良好的社交关系","定期进行心理健康自检"]}
+        else if(ratio<=0.55){level="轻度关注";icon="💪";desc="整体还可以，有些方面需留意。";suggs=["保证每天7-8小时充足睡眠","每天10-15分钟深呼吸或冥想","适当运动，释放压力","多与朋友家人交流倾诉","尝试记录情绪日记"]}
+        else if(ratio<=0.75){level="中度关注";icon="🦋";desc="你的心理状态需要更多关注和支持。";suggs=["建立规律的作息时间表","减少咖啡因和酒精摄入","学习压力管理技巧","尝试心理咨询或辅导","加入支持性社群"]}
+        else{level="建议关注";icon="🤝";desc="建议寻求专业帮助，你不是一个人。";suggs=["尽早联系心理咨询师或医生","告诉信任的人你的感受","保持基本的生活规律","必要时寻求医疗支持","记住：寻求帮助是勇敢的表现"]}
+        var record={date:new Date().toISOString(),score:total,level:level,dims:Object.assign({},S.dims)};
+        S.history.push(record);if(S.history.length>30)S.history.shift();
+        localStorage.setItem('mhHistory',JSON.stringify(S.history));
+        updateHistory();
+        var dims=[];for(var k in S.dims)dims.push({name:CONFIG.DIM_NAMES[k],score:S.dims[k],max:8});
+        dims.sort(function(a,b){return a.score-b.score});
+        var dimHtml='<div class="suggestion-section"><div class="suggestion-title">维度分析</div>';
+        for(var i=0;i<dims.length;i++){
+            var d=dims[i];var pct=Math.round((d.score/d.max)*100);
+            var cls=pct<=40?'high':(pct<=65?'medium':'low');
+            dimHtml+='<div class="dimension-card"><div class="dimension-title">'+d.name+'</div><div class="dimension-bar"><div class="dimension-fill '+cls+'" style="width:'+pct+'%"></div></div><div class="dimension-value">'+pct+'%</div></div>';
+        }
+        dimHtml+='</div>';
+        var suggHtml='<div class="suggestion-section"><div class="suggestion-title">个性化建议</div>';
+        for(var i=0;i<suggs.length;i++)suggHtml+='<div class="suggestion-item"><div class="suggestion-icon">'+(i+1)+'</div><div class="suggestion-text">'+suggs[i]+'</div></div>';
+        suggHtml+='</div>';
+        var html='<div class="result-card"><div class="score-display"><span class="score-number">'+total+'</span><span class="score-label">/'+max+'</span></div>';
+        html+='<div class="result-level"><div class="level-name">'+icon+' '+level+'</div><div class="level-desc">'+desc+'</div></div></div>';
+        html+=dimHtml+suggHtml;
+        html+='<div class="disclaimer">本评估仅供参考，不能替代专业诊断。如有需要，请咨询专业心理健康服务。</div>';
+        document.getElementById('resultDate').textContent=new Date().toLocaleDateString('zh-CN');
+        document.getElementById('modalBody').innerHTML=html;
+        document.getElementById('resultModal').classList.add('show');
+        resetAssessment();
+    }
+    function closeModal(){document.getElementById('resultModal').classList.remove('show');showTab('trend')}
+    /* ========== 趋势图 ========== */
+    function drawTrendChart(){
+        var canvas=document.getElementById('trendChart');var ctx=canvas.getContext('2d');
+        var w=canvas.width=canvas.offsetWidth;var h=canvas.height=canvas.offsetHeight;
+        ctx.clearRect(0,0,w,h);
+        var data=S.history.slice(-14);
+        if(data.length<2){ctx.fillStyle='#9ca3af';ctx.font='14px sans-serif';ctx.textAlign='center';ctx.fillText('至少需要2次记录',w/2,h/2);return}
+        var pad=35;var max=CONFIG.QUESTIONS.length*4;var min=CONFIG.QUESTIONS.length;
+        var stepX=(w-pad*2)/(data.length-1);var stepY=(h-pad*2)/(max-min);
+        ctx.strokeStyle='#f3f4f6';ctx.lineWidth=1;
+        for(var i=0;i<=4;i++){ctx.beginPath();ctx.moveTo(pad,pad+i*stepY);ctx.lineTo(w-pad,pad+i*stepY);ctx.stroke()}
+        var avg=data.reduce(function(s,d){return s+d.score},0)/data.length;
+        var avgY=h-pad-(avg-min)*stepY;
+        ctx.strokeStyle='#fbbf24';ctx.lineWidth=2;ctx.setLineDash([5,5]);
+        ctx.beginPath();ctx.moveTo(pad,avgY);ctx.lineTo(w-pad,avgY);ctx.stroke();ctx.setLineDash([]);
+        ctx.strokeStyle='#ec4899';ctx.lineWidth=3;ctx.beginPath();
+        for(var i=0;i<data.length;i++){var x=pad+i*stepX;var y=h-pad-(data[i].score-min)*stepY;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)}
+        ctx.stroke();
+        for(var i=0;i<data.length;i++){
+            var x=pad+i*stepX;var y=h-pad-(data[i].score-min)*stepY;
+            ctx.fillStyle='#ec4899';ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fill();
+            ctx.fillStyle='white';ctx.beginPath();ctx.arc(x,y,2,0,Math.PI*2);ctx.fill();
+        }
+    }
+    function updateStats(){
+        if(S.history.length===0){document.getElementById('statAvg').textContent='--';document.getElementById('statBest').textContent='--';document.getElementById('statCount').textContent='--';return}
+        var scores=S.history.map(function(h){return h.score});
+        document.getElementById('statAvg').textContent=Math.round(scores.reduce(function(a,b){return a+b},0)/scores.length);
+        document.getElementById('statBest').textContent=Math.min.apply(null,scores);
+        document.getElementById('statCount').textContent=S.history.length;
+    }
+    function updateHistory(){
+        var html='';var rev=S.history.slice(-10).reverse();
+        for(var i=0;i<rev.length;i++){var h=rev[i];var date=new Date(h.date).toLocaleDateString();html+='<div class="history-item"><div><div class="history-date">'+date+'</div></div><div class="history-score">'+h.score+'分</div></div>'}
+        if(html==='')html='<div style="text-align:center;color:#9ca3af;padding:30px">还没有评估记录<br>开始第一次自评吧</div>';
+        document.getElementById('historyList').innerHTML=html;
+    }
+    function showHistoryComparison(){
+        if(S.history.length<2){alert('至少需要2次评估记录');return}
+        var latest=S.history[S.history.length-1];var prev=S.history[S.history.length-2];
+        var html='<div class="comparison-container">';
+        var diff=latest.score-prev.score;var cls=diff<0?'up':(diff>0?'down':'same');var arr=diff<0?'↓':(diff>0?'↑':'→');
+        html+='<div class="comparison-item"><span class="comparison-label">总分</span><div class="comparison-values"><span class="comparison-old">'+prev.score+'</span><span class="comparison-new">'+latest.score+'</span><span class="comparison-change '+cls+'">'+arr+Math.abs(diff)+'</span></div></div>';
+        for(var k in CONFIG.DIM_NAMES){
+            var d=latest.dims[k]-prev.dims[k];var c=d<0?'up':(d>0?'down':'same');var a=d<0?'↓':(d>0?'↑':'→');
+            html+='<div class="comparison-item"><span class="comparison-label">'+CONFIG.DIM_NAMES[k]+'</span><div class="comparison-values"><span class="comparison-old">'+prev.dims[k]+'</span><span class="comparison-new">'+latest.dims[k]+'</span><span class="comparison-change '+c+'">'+a+Math.abs(d)+'</span></div></div>';
+        }
+        html+='</div>';
+        document.getElementById('comparisonBody').innerHTML=html;
+        document.getElementById('comparisonModal').classList.add('show');
+    }
+    function closeComparisonModal(){document.getElementById('comparisonModal').classList.remove('show')}
+    /* ========== 日历 ========== */
+    function renderCalendar(){
+        document.getElementById('calendarMonth').textContent=S.calYear+'年'+(S.calMonth+1)+'月';
+        var grid=document.getElementById('calendarGrid');
+        var firstDay=new Date(S.calYear,S.calMonth,1).getDay();
+        var daysInMonth=new Date(S.calYear,S.calMonth+1,0).getDate();
+        var days=['日','一','二','三','四','五','六'];
+        var today=new Date();
+        var html='';
+        for(var i=0;i<7;i++)html+='<div class="calendar-day-header">'+days[i]+'</div>';
+        for(var i=0;i<firstDay;i++)html+='<div></div>';
+        for(var d=1;d<=daysInMonth;d++){
+            var cls='calendar-day';
+            if(today.getDate()===d&&today.getMonth()===S.calMonth&&today.getFullYear()===S.calYear)cls+=' calendar-day-today';
+            var rec=null;
+            for(var i=0;i<S.history.length;i++){var rd=new Date(S.history[i].date);if(rd.getDate()===d&&rd.getMonth()===S.calMonth&&rd.getFullYear()===S.calYear){rec=S.history[i];break}}
+            if(rec){var pct=rec.score/(CONFIG.QUESTIONS.length*4);var lv=Math.ceil(pct*5);if(lv>5)lv=5;cls+=' calendar-day-'+lv}
+            html+='<div class="'+cls+'">'+d+'</div>';
+        }
+        grid.innerHTML=html;
+    }
+    function changeMonth(delta){S.calMonth+=delta;if(S.calMonth>11){S.calMonth=0;S.calYear++}if(S.calMonth<0){S.calMonth=11;S.calYear--}renderCalendar()}
+    /* ========== 呼吸 ========== */
+    function setBreathMode(mode){
+        S.breathMode=mode;
+        document.querySelectorAll('.breath-preset').forEach(function(b){b.classList.remove('active')});
+        document.querySelectorAll('.breath-preset').forEach(function(b){if(b.textContent.indexOf(mode)>-1)b.classList.add('active')});
+    }
+    function toggleBreathing(){if(S.isBreathing)stopBreathing();else startBreathing()}
+    function startBreathing(){
+        S.isBreathing=true;document.getElementById('breathBtn').textContent='停止';
+        var inhale=S.breathMode;var hold=S.breathMode===4?7:S.breathMode;var exhale=S.breathMode===4?8:S.breathMode;
+        var circle=document.getElementById('breathingCircle');var text=document.getElementById('breathingText');var sub=document.getElementById('breathingSub');
+        var phase=0;var count=0;
+        function tick(){
+            if(phase===0){circle.classList.add('expand');text.textContent='吸气';sub.textContent=inhale+'秒';count++;if(count>=inhale){phase=1;count=0}}
+            else if(phase===1){text.textContent='屏息';sub.textContent=hold+'秒';count++;if(count>=hold){phase=2;count=0}}
+            else{circle.classList.remove('expand');text.textContent='呼气';sub.textContent=exhale+'秒';count++;if(count>=exhale){phase=0;count=0}}
+        }
+        tick();S.breathTimer=setInterval(tick,1000);
+    }
+    function stopBreathing(){
+        S.isBreathing=false;clearInterval(S.breathTimer);
+        document.getElementById('breathBtn').textContent='开始练习';
+        document.getElementById('breathingCircle').classList.remove('expand');
+        document.getElementById('breathingText').textContent='准备';
+        document.getElementById('breathingSub').textContent='点击开始';
+    }
+    /* ========== 气泡 ========== */
+    function initBubbles(){if(document.getElementById('bubbleGrid').children.length>0)return;resetBubbles()}
+    function resetBubbles(){
+        S.popped=0;S.bubbleStart=null;clearInterval(S.bubbleTimer);
+        document.getElementById('poppedCount').textContent='0';document.getElementById('popTime').textContent='0';
+        var html='';for(var i=0;i<18;i++)html+='<div class="bubble" onclick="popBubble(this)"></div>';
+        document.getElementById('bubbleGrid').innerHTML=html;
+    }
+    function popBubble(el){
+        if(el.classList.contains('popped'))return;
+        el.classList.add('popped');S.popped++;
+        document.getElementById('poppedCount').textContent=S.popped;
+        if(document.getElementById('soundToggle').checked)playPopSound();
+        if(!S.bubbleStart){S.bubbleStart=Date.now();S.bubbleTimer=setInterval(function(){document.getElementById('popTime').textContent=Math.floor((Date.now()-S.bubbleStart)/1000)},1000)}
+        if(S.popped===18){clearInterval(S.bubbleTimer);setTimeout(function(){alert('全部戳破！太解压了！')},300)}
+    }
+    function playPopSound(){
+        try{
+            if(!S.audioCtx)S.audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+            var osc=S.audioCtx.createOscillator();var gain=S.audioCtx.createGain();
+            osc.connect(gain);gain.connect(S.audioCtx.destination);
+            osc.frequency.value=600+Math.random()*400;gain.gain.setValueAtTime(0.3,S.audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01,S.audioCtx.currentTime+0.1);
+            osc.start();osc.stop(S.audioCtx.currentTime+0.1);
+        }catch(e){}
+    }
+    /* ========== 小贴士 ========== */
+    function refreshTip(){S.tipIdx=(S.tipIdx+1)%CONFIG.TIPS.length;document.getElementById('tipText').textContent=CONFIG.TIPS[S.tipIdx]}
+    /* ========== 雷达图 ========== */
+    function renderRadarChart(){
+        var canvas=document.getElementById('radarChart');var ctx=canvas.getContext('2d');
+        canvas.width=200;canvas.height=200;
+        var cx=100,cy=100,r=70;
+        var dims=['mood','sleep','stress','energy','social'];
+        var labels=['情绪','睡眠','压力','精力','社交'];
+        var lastData=S.history.length>0?S.history[S.history.length-1].dims:{mood:4,sleep:4,stress:4,energy:4,social:4};
+        ctx.strokeStyle='#e5e7eb';ctx.lineWidth=1;
+        for(var i=1;i<=5;i++){ctx.beginPath();for(var j=0;j<5;j++){var angle=Math.PI*2*j/5-Math.PI/2;var x=cx+Math.cos(angle)*r*i/5;var y=cy+Math.sin(angle)*r*i/5;if(j===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)}ctx.closePath();ctx.stroke()}
+        for(var j=0;j<5;j++){var angle=Math.PI*2*j/5-Math.PI/2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(angle)*r,cy+Math.sin(angle)*r);ctx.stroke()}
+        ctx.fillStyle='rgba(236,72,153,0.2)';ctx.strokeStyle='#ec4899';ctx.lineWidth=2;ctx.beginPath();
+        for(var j=0;j<5;j++){
+            var val=(8-lastData[dims[j]])/8;
+            var angle=Math.PI*2*j/5-Math.PI/2;
+            var x=cx+Math.cos(angle)*r*val;var y=cy+Math.sin(angle)*r*val;
+            if(j===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+        }
+        ctx.closePath();ctx.fill();ctx.stroke();
+        ctx.fillStyle='#374151';ctx.font='12px sans-serif';ctx.textAlign='center';
+        for(var j=0;j<5;j++){var angle=Math.PI*2*j/5-Math.PI/2;var x=cx+Math.cos(angle)*(r+18);var y=cy+Math.sin(angle)*(r+18)+4;ctx.fillText(labels[j],x,y)}
+    }
+    /* ========== 目标 ========== */
+    function renderGoals(){
+        var html='';var completed=0;
+        for(var i=0;i<S.goals.length;i++){
+            var g=S.goals[i];
+            if(g.done)completed++;
+            html+='<div class="goal-item"><div class="goal-checkbox'+(g.done?' checked':'')+'" onclick="toggleGoal('+i+')">'+(g.done?'✓':'')+'</div><div class="goal-text'+(g.done?' completed':'')+'">'+g.text+'</div><button class="goal-delete" onclick="deleteGoal('+i+')">×</button></div>';
+        }
+        document.getElementById('goalsList').innerHTML=html||'<div style="text-align:center;color:#9ca3af;padding:20px;font-size:0.9em">还没有设定目标</div>';
+        var pct=S.goals.length>0?Math.round(completed/S.goals.length*100):0;
+        document.getElementById('goalProgress').style.width=pct+'%';
+    }
+    function addGoal(){
+        var input=document.getElementById('goalInput');
+        if(input.value.trim()&&S.goals.length<10){S.goals.push({text:input.value.trim(),done:false});input.value='';localStorage.setItem('mhGoals',JSON.stringify(S.goals));renderGoals()}
+    }
+    function toggleGoal(idx){S.goals[idx].done=!S.goals[idx].done;localStorage.setItem('mhGoals',JSON.stringify(S.goals));renderGoals()}
+    function deleteGoal(idx){S.goals.splice(idx,1);localStorage.setItem('mhGoals',JSON.stringify(S.goals));renderGoals()}
+    /* ========== 资源库 ========== */
+    function showResources(type){
+        var r=CONFIG.RESOURCES[type];
+        document.getElementById('resourceIcon').textContent=r.icon;
+        document.getElementById('resourceTitle').textContent=r.title;
+        var html='<ul class="resource-list">';
+        for(var i=0;i<r.items.length;i++)html+='<li>'+r.items[i]+'</li>';
+        html+='</ul>';
+        document.getElementById('resourcesBody').innerHTML=html;
+        document.getElementById('resourcesModal').classList.add('show');
+    }
+    function closeResourcesModal(){document.getElementById('resourcesModal').classList.remove('show')}
+    /* ========== 保存图片 ========== */
+    function saveResultAsImage(){
+        var content=document.getElementById('modalBody').innerHTML;
+        var win=window.open('','','width=400,height=600');
+        win.document.write('<html><head><title>评估结果</title><style>body{font-family:sans-serif;padding:20px;background:#fce7f3}.result-card{background:linear-gradient(135deg,#fce7f3,#fbcfe8);border-radius:20px;padding:24px;text-align:center}.score-number{font-size:3em;font-weight:800;color:#be185d}.disclaimer{background:#fef3c7;border-radius:12px;padding:14px;font-size:0.85em;color:#92400e;margin-top:16px}</style></head><body>');
+        win.document.write('<h2 style="color:#be185d;text-align:center">女性心理健康自评</h2>');
+        win.document.write('<p style="text-align:center;color:#6b7280">'+new Date().toLocaleDateString('zh-CN')+'</p>');
+        win.document.write(content);
+        win.document.write('<p style="text-align:center;color:#9ca3af;margin-top:20px;font-size:0.8em">截图保存或使用浏览器打印功能</p>');
+        win.document.write('</body></html>');
+        win.document.close();
+    }
+    init();
+    </script>
+</body>
+</html>
