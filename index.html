@@ -1393,14 +1393,22 @@
         }
 
         function startAssessment() {
-            if (!state.role) return;
+            if (!state.role) {
+                alert('请先选择一个角色');
+                return;
+            }
             
             el.welcomeOverlay.classList.add('hidden');
             state.q = 0;
             state.a = [];
+            
+            // 确保在自评标签页
+            showTab('assessment');
+            
+            // 渲染第一题
             renderQuestions();
             
-            console.log('开始评估，角色:', getRoleById(state.role)?.name);
+            console.log('开始评估，角色:', state.role);
         }
 
         // ==================== 事件绑定 ====================
