@@ -997,6 +997,35 @@
             color: white;
         }
         
+        /* 切换角色按钮 */
+        .role-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .switch-role-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--cream);
+            border: 1px solid var(--cream-dark);
+            color: var(--text-light);
+            padding: 4px 10px;
+            border-radius: 14px;
+            font-size: 0.75em;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .switch-role-btn:hover {
+            background: var(--mint-light);
+            border-color: var(--mint);
+            color: var(--text);
+        }
+        
         @media (max-width: 480px) {
             .container { padding: 18px; }
             .breathing-circle { width: 140px; height: 140px; }
@@ -1021,7 +1050,10 @@
     <!-- 主应用容器 -->
     <div class="container">
         <h1>心理健康自评</h1>
-        <p class="subtitle" id="roleBadge"></p>
+        <div class="role-header">
+            <span class="subtitle" id="roleBadge"></span>
+            <button class="switch-role-btn" id="switchRoleBtn">🔄 切换</button>
+        </div>
         <div class="privacy-badge">🔒 数据仅本地存储</div>
         
         <div class="nav-tabs">
@@ -1259,6 +1291,7 @@
             el.welcomeOverlay = document.getElementById('welcomeOverlay');
             el.roleGrid = document.getElementById('roleGrid');
             el.startBtn = document.getElementById('startBtn');
+            el.switchRoleBtn = document.getElementById('switchRoleBtn');
             el.roleBadge = document.getElementById('roleBadge');
             el.questionsContainer = document.getElementById('questionsContainer');
             el.nextBtn = document.getElementById('nextBtn');
@@ -1394,6 +1427,23 @@
             }
         }
 
+        function showRoleSelector() {
+            // 重置答题状态
+            state.q = 0;
+            state.a = [];
+            
+            // 显示欢迎遮罩层
+            el.welcomeOverlay.classList.remove('hidden');
+            
+            // 重新渲染角色，保留当前选中状态
+            renderRoles();
+            
+            // 确保开始按钮状态正确
+            el.startBtn.disabled = !state.role;
+            
+            console.log('打开角色选择器');
+        }
+
         function startAssessment() {
             if (!state.role) {
                 alert('请先选择一个角色');
@@ -1426,6 +1476,9 @@
             
             // 开始按钮
             el.startBtn.addEventListener('click', startAssessment);
+            
+            // 切换角色按钮
+            el.switchRoleBtn.addEventListener('click', showRoleSelector);
             
             // 标签切换
             const tabs = document.querySelectorAll('.nav-tab');
