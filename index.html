@@ -1347,9 +1347,11 @@
             if (state.role) {
                 el.startBtn.disabled = false;
                 updateRoleBadge();
-                // 如果已经选择过角色，自动隐藏欢迎层
+                // 如果已经选择过角色，自动隐藏欢迎层并渲染题目
                 if (el.welcomeOverlay) {
                     el.welcomeOverlay.classList.add('hidden');
+                    // 修复：确保渲染第一道题目
+                    renderQuestions();
                 }
             }
         }
