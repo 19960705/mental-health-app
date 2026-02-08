@@ -1434,6 +1434,7 @@
             
             // 显示欢迎遮罩层
             el.welcomeOverlay.classList.remove('hidden');
+            el.welcomeOverlay.style.display = 'flex';  // 确保显示
             
             // 重新渲染角色，保留当前选中状态
             renderRoles();
