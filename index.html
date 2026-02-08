@@ -1,270 +1,58 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>心理健康自评</title>
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        :root{--mint:#7DD3C0;--mint-light:#A8E6CF;--lavender:#B8A9C9;--lavender-light:#D4C5E8;--peach:#FFB5A7;--peach-light:#FFD3C9;--cream:#FDF8F5;--cream-dark:#F5EDE8;--sky:#A8D8EA;--sky-light:#C5E8F4;--text:#5A5A6E;--text-light:#8B8B9E;--shadow:rgba(125,211,192,0.2)}
-        body{font-family:-apple-system,'Segoe UI',sans-serif;background:linear-gradient(135deg,var(--cream) 0%,var(--sky-light) 50%,var(--lavender-light) 100%);min-height:100vh;padding:20px;padding-top:40px}
-        .container{background:white;border-radius:24px;box-shadow:0 10px 40px var(--shadow);max-width:500px;width:100%;margin:0 auto;padding:24px}
-        h1{color:var(--text);font-size:1.5em;text-align:center;margin-bottom:8px}
-        .subtitle{color:var(--text-light);text-align:center;font-size:0.9em;margin-bottom:16px}
-        .privacy-badge{display:inline-flex;align-items:center;gap:6px;background:var(--mint-light);color:#2D6A4F;padding:6px 14px;border-radius:20px;font-size:0.8em;margin-bottom:20px}
-        .nav-tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
-        .nav-tab{flex:1;min-width:60px;padding:10px 6px;border:none;border-radius:10px;font-size:0.72em;cursor:pointer;transition:all 0.3s;background:var(--cream-dark);color:var(--text-light);text-align:center}
-        .nav-tab.active{background:linear-gradient(135deg,var(--mint),var(--sky));color:white;transform:scale(1.05);box-shadow:0 4px 15px var(--shadow)}
-        .nav-tab:hover:not(.active){background:var(--cream);transform:translateY(-2px)}
-        .tab-content{display:none;animation:fadeIn 0.4s}
-        .tab-content.active{display:block}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
-        .welcome-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,var(--mint-light),var(--sky-light),var(--lavender-light));z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px}
-        .welcome-overlay.hidden{display:none}
-        .welcome-content{background:white;border-radius:28px;padding:32px;max-width:400px;width:100%;box-shadow:0 20px 60px var(--shadow);animation:slideUp 0.5s}
-        @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-        .welcome-icon{font-size:3.5em;text-align:center;margin-bottom:12px}
-        .welcome-title{font-size:1.4em;font-weight:700;color:var(--text);text-align:center;margin-bottom:20px}
-        .welcome-subtitle{color:var(--text-light);text-align:center;font-size:0.9em;margin-bottom:24px}
-        .role-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px}
-        .role-card{background:var(--cream);border-radius:16px;padding:20px 16px;text-align:center;cursor:pointer;transition:all 0.3s;border:2px solid transparent}
-        .role-card:hover{transform:translateY(-4px);box-shadow:0 8px 20px var(--shadow)}
-        .role-card.selected{border-color:var(--mint);background:linear-gradient(135deg,var(--mint-light),var(--sky-light))}
-        .role-icon{font-size:2.5em;margin-bottom:8px}
-        .role-name{font-size:0.95em;font-weight:600;color:var(--text);margin-bottom:4px}
-        .role-desc{font-size:0.75em;color:var(--text-light)}
-        .btn{width:100%;padding:16px 24px;border:none;border-radius:14px;font-size:1em;cursor:pointer;transition:all 0.3s;font-weight:600;margin-bottom:10px}
-        .btn-primary{background:linear-gradient(135deg,var(--mint),var(--sky));color:white;box-shadow:0 6px 20px var(--shadow)}
-        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px var(--shadow)}
-        .btn-primary:disabled{background:#ccc;cursor:not-allowed;transform:none;box-shadow:none}
-        .progress-bar{background:var(--cream);border-radius:10px;height:8px;margin-bottom:16px;overflow:hidden}
-        .progress-fill{background:linear-gradient(90deg,var(--mint),var(--sky));height:100%;border-radius:10px;transition:width 0.4s}
-        .progress-text{font-size:0.8em;color:var(--text-light);text-align:center;margin-bottom:8px}
-        .question-card{background:linear-gradient(135deg,var(--cream),var(--sky-light));border-radius:16px;padding:20px;margin-bottom:16px}
-        .question-number{color:var(--mint);font-size:0.85em;margin-bottom:8px;font-weight:600}
-        .question-text{color:var(--text);font-size:1.05em;margin-bottom:16px;line-height:1.6;font-weight:500}
-        .option{display:flex;align-items:center;padding:14px 16px;background:white;border:2px solid var(--cream-dark);border-radius:12px;margin-bottom:10px;cursor:pointer;transition:all 0.25s}
-        .option:hover{border-color:var(--mint);background:var(--cream);transform:translateX(6px)}
-        .option.selected{border-color:var(--mint);background:linear-gradient(135deg,var(--mint-light),var(--sky-light));transform:translateX(12px);box-shadow:0 6px 20px var(--shadow)}
-        .option-letter{width:28px;height:28px;background:var(--mint);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;margin-right:12px;font-size:0.85em;transition:all 0.25s}
-        .option.selected .option-letter{background:var(--sky);transform:scale(1.15)}
-        .option-text{color:var(--text);font-size:0.95em;line-height:1.5}
-        .trend-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
-        .trend-stat{background:var(--cream);border-radius:10px;padding:12px;text-align:center}
-        .trend-stat-value{font-size:1.3em;font-weight:700;color:var(--mint)}
-        .trend-stat-label{font-size:0.75em;color:var(--text-light)}
-        .history-item{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--cream);border-radius:10px;margin-bottom:8px}
-        .history-date{font-size:0.85em;color:var(--text-light)}
-        .history-score{font-weight:600;color:var(--text)}
-        .history-role{font-size:0.7em;padding:2px 8px;background:var(--lavender-light);color:var(--lavender);border-radius:10px;margin-left:8px}
-        .calendar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-        .calendar-month{font-weight:600;color:var(--text);font-size:0.9em}
-        .calendar-nav-btn{width:32px;height:32px;border:none;border-radius:8px;background:var(--cream);cursor:pointer;font-size:0.9em;color:var(--text)}
-        .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-        .calendar-day-header{text-align:center;font-size:0.7em;color:var(--text-light);padding:6px 0;font-weight:500}
-        .calendar-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:0.8em;background:var(--cream);transition:all 0.2s}
-        .calendar-day:hover{background:var(--cream-dark);transform:scale(1.1)}
-        .calendar-day-today{background:var(--mint);color:white;font-weight:700;border:2px solid var(--sky)}
-        .calendar-day-1{background:var(--mint-light);color:#2D6A4F}
-        .calendar-day-2{background:var(--sky-light);color:#1E6091}
-        .calendar-day-3{background:linear-gradient(135deg,var(--peach-light),var(--lavender-light));color:#7C5295}
-        .calendar-day-4{background:linear-gradient(135deg,var(--peach),var(--lavender));color:#6B3E8C}
-        .calendar-day-5{background:linear-gradient(135deg,var(--peach),#E8A5A5);color:#8B3A3A}
-        .legend{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:16px;font-size:0.7em;color:var(--text-light)}
-        .legend span{display:flex;align-items:center;gap:4px}
-        .legend-dot{width:10px;height:10px;border-radius:3px}
-        .breathing-container{text-align:center;padding:20px}
-        .breathing-circle{width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,var(--mint),var(--sky));margin:0 auto 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform 4s cubic-bezier(0.4,0,0.2,1);box-shadow:0 10px 40px var(--shadow)}
-        .breathing-circle.expand{transform:scale(1.3)}
-        .breathing-text{font-size:1.4em;font-weight:700;color:white}
-        .breathing-sub{font-size:0.85em;color:var(--cream);margin-top:6px}
-        .breathing-controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
-        .breath-preset{padding:10px 18px;border:2px solid var(--cream-dark);border-radius:25px;background:white;cursor:pointer;font-size:0.9em;transition:all 0.2s;color:var(--text)}
-        .breath-preset.active{border-color:var(--mint);background:linear-gradient(135deg,var(--mint-light),var(--sky-light));color:var(--text);font-weight:600}
-        .breath-guide{background:var(--cream);border-radius:12px;padding:14px;margin-top:16px;font-size:0.85em;color:var(--text);line-height:1.7}
-        .bubble-container{background:var(--cream);border-radius:14px;padding:16px;min-height:280px}
-        .bubble-stats{display:flex;justify-content:space-between;margin-bottom:16px;font-size:0.9em;color:var(--text);background:white;padding:12px 16px;border-radius:10px}
-        .bubble-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
-        .bubble{aspect-ratio:1;border-radius:50%;background:linear-gradient(135deg,var(--mint),var(--sky));cursor:pointer;transition:all 0.15s;box-shadow:0 4px 15px var(--shadow);position:relative;border:none}
-        .bubble::before{content:'';position:absolute;top:15%;left:20%;width:25%;height:25%;background:rgba(255,255,255,0.5);border-radius:50%}
-        .bubble:active{transform:scale(0.92)}
-        .bubble.popped{animation:bubblePop 0.4s forwards;pointer-events:none}
-        @keyframes bubblePop{0%{transform:scale(1)}30%{transform:scale(1.2)}60%{transform:scale(0.8)}100%{transform:scale(0);opacity:0}}
-        .bubble-hint{text-align:center;color:var(--text-light);font-size:0.85em;margin-top:14px}
-        .tip-card{background:linear-gradient(135deg,var(--mint-light),var(--sky-light));border-radius:14px;padding:16px;margin-bottom:16px}
-        .tip-label{font-size:0.75em;color:#2D6A4F;font-weight:600;margin-bottom:6px}
-        .tip-text{color:#1E5332;font-size:0.95em;line-height:1.6}
-        .tip-refresh{font-size:0.8em;color:#2D6A4F;margin-top:10px;cursor:pointer;text-decoration:underline;background:none;border:none}
-        .goals-section{background:var(--cream);border-radius:14px;padding:16px;margin-bottom:16px}
-        .goal-item{display:flex;align-items:center;gap:12px;padding:12px;background:white;border-radius:10px;margin-bottom:10px}
-        .goal-checkbox{width:22px;height:22px;border:2px solid var(--cream-dark);border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-        .goal-checkbox.checked{background:var(--mint);border-color:var(--mint);color:white}
-        .goal-text{flex:1;color:var(--text);font-size:0.9em}
-        .goal-text.completed{text-decoration:line-through;color:var(--text-light)}
-        .goal-delete{width:24px;height:24px;border:none;background:none;color:var(--text-light);cursor:pointer;font-size:1.2em}
-        .goal-add{display:flex;gap:10px;margin-top:12px}
-        .goal-add input{flex:1;padding:10px 14px;border:2px solid var(--cream-dark);border-radius:10px;font-size:0.9em;outline:none;color:var(--text)}
-        .goal-add input:focus{border-color:var(--mint)}
-        .goal-progress{background:var(--cream);border-radius:8px;height:8px;margin-top:12px;overflow:hidden}
-        .goal-progress-fill{background:linear-gradient(90deg,var(--mint),var(--sky));height:100%;transition:width 0.3s}
-        .resource-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
-        .resource-card{background:var(--cream);border-radius:12px;padding:14px;text-align:center;cursor:pointer;transition:all 0.2s;border:2px solid transparent}
-        .resource-card:hover{border-color:var(--mint);transform:translateY(-2px)}
-        .resource-icon{font-size:1.8em;margin-bottom:6px}
-        .resource-title{font-size:0.85em;color:var(--text);font-weight:500}
-        .hotline-card{background:linear-gradient(135deg,var(--peach-light),var(--lavender-light));border-radius:12px;padding:14px;text-align:center}
-        .hotline-title{color:#7C5295;font-size:0.9em;font-weight:600;margin-bottom:8px}
-        .hotline-number{color:#6B3E8C;font-size:1.3em;font-weight:700}
-        .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
-        .modal.show{display:flex}
-        .modal-content{background:white;border-radius:24px;padding:24px;max-width:420px;width:100%;max-height:85vh;overflow-y:auto;animation:modalIn 0.3s}
-        @keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
-        .modal-header{text-align:center;margin-bottom:20px}
-        .modal-icon{font-size:3em;margin-bottom:10px}
-        .modal-title{font-size:1.3em;font-weight:700;color:var(--text);margin-bottom:4px}
-        .modal-subtitle{color:var(--text-light);font-size:0.9em}
-        .result-card{background:linear-gradient(135deg,var(--mint-light),var(--sky-light));border-radius:20px;padding:24px;margin-bottom:20px;text-align:center}
-        .score-display{display:flex;align-items:baseline;justify-content:center;gap:8px}
-        .score-number{font-size:3.5em;font-weight:800;color:#2D6A4F;line-height:1}
-        .score-label{color:#2D6A4F;font-size:1em;opacity:0.8}
-        .result-level{background:white;border-radius:14px;padding:16px;margin:16px 0}
-        .level-name{font-size:1.15em;font-weight:600;color:var(--text);margin-bottom:6px}
-        .level-desc{color:var(--text);font-size:0.95em;line-height:1.6}
-        .suggestion-section{margin-top:20px}
-        .suggestion-title{font-size:1em;font-weight:600;color:var(--text);margin-bottom:12px}
-        .suggestion-item{display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--cream);border-radius:12px;margin-bottom:10px;text-align:left;border-left:3px solid var(--mint)}
-        .suggestion-icon{width:24px;height:24px;background:var(--mint);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8em;flex-shrink:0}
-        .suggestion-text{color:var(--text);font-size:0.9em;line-height:1.6}
-        .disclaimer{background:var(--cream);border-radius:12px;padding:14px;font-size:0.85em;color:var(--text);line-height:1.6;margin-top:16px;text-align:center}
-        .share-buttons{display:flex;gap:10px;margin-top:16px}
-        .share-btn{flex:1;padding:12px;border:none;border-radius:10px;cursor:pointer;font-size:0.9em;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--cream);color:var(--text)}
-        .share-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px var(--shadow)}
-        .share-btn.primary{background:linear-gradient(135deg,var(--mint),var(--sky));color:white}
-        @media(max-width:480px){.container{padding:18px}.breathing-circle{width:140px;height:140px}.bubble-grid{grid-template-columns:repeat(5,1fr)}}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>心理健康自评</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--mint:#7DD3C0;--mint-light:#A8E6CF;--lavender:#B8A9C9;--lavender-light:#D4C5E8;--peach:#FFB5A7;--peach-light:#FFD3C9;--cream:#FDF8F5;--cream-dark:#F5EDE8;--sky:#A8D8EA;--sky-light:#C5E8F4;--text:#5A5A6E---text-light:#8B8B9E;--shadow:rgba(125,211,192,0.2)}
+body{font-family:-apple-system,sans-serif;background:linear-gradient(135deg,var(--cream),var(--sky-light),var(--lavender-light));min-height:100vh;padding:20px}
+.welcome-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,var(--mint-light),var(--sky-light),var(--lavender-light));z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px}
+.welcome-overlay.hidden{display:none}
+.welcome-content{background:white;border-radius:28px;padding:32px;max-width:400px;width:100%;box-shadow:0 20px 60px var(--shadow)}
+.welcome-icon{font-size:3.5em;text-align:center;margin-bottom:12px}
+.welcome-title{font-size:1.4em;font-weight:700;color:var(--text);text-align:center;margin-bottom:20px}
+.welcome-subtitle{color:var(--text-light);text-align:center;font-size:0.9em;margin-bottom:24px}
+.role-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px}
+.role-card{background:var(--cream);border-radius:16px;padding:20px 16px;text-align:center;cursor:pointer;transition:all 0.3s; border:2px solid transparent}
+.role-card:hover{transform:translateY(-4px);box-shadow:0 8px 20px var(--shadow)}
+.role-card.selected{border-color:var(--mint);background:linear-gradient(135deg,var(--mint-light),var(--sky-light))}
+.role-icon{font-size:2.5em;margin-bottom:8px}
+.role-name{font-size:0.95em;font-weight:600;color:var(--text);margin-bottom:4px}
+.role-desc{font-size:0.75em;color:var(--text-light)}
+.btn{width:100%;padding:16px 24px;border:none;border-radius:14px;font-size:1em;cursor:pointer;font-weight:600}
+.btn-primary{background:linear-gradient(135deg,var(--mint),var(--sky));color:white;box-shadow:0 6px 20px var(--shadow)}
+.btn-primary:disabled{background:#ccc;cursor:not-allowed}
+</style>
 </head>
 <body>
-    <div class="welcome-overlay" id="welcomeOverlay">
-        <div class="welcome-content">
-            <div class="welcome-icon">🌿</div>
-            <h2 class="welcome-title">心理健康自评</h2>
-            <p class="welcome-subtitle">选择最符合你的角色，获得定制化的心理评估</p>
-            <div class="role-grid" id="roleGrid"></div>
-            <button class="btn btn-primary" id="startBtn" disabled>开始评估</button>
-        </div>
-    </div>
-    <div class="container">
-        <h1>心理健康自评</h1>
-        <p class="subtitle" id="roleBadge"></p>
-        <div class="privacy-badge">🔒 数据仅本地存储</div>
-        <div class="nav-tabs">
-            <button class="nav-tab active" data-tab="assessment">自评</button>
-            <button class="nav-tab" data-tab="trend">趋势</button>
-            <button class="nav-tab" data-tab="calendar">日历</button>
-            <button class="nav-tab" data-tab="breath">呼吸</button>
-            <button class="nav-tab" data-tab="bubble">解压</button>
-            <button class="nav-tab" data-tab="more">更多</button>
-        </div>
-        <div id="assessmentTab" class="tab-content active">
-            <div id="questionsContainer"></div>
-            <button class="btn btn-primary" id="nextBtn" style="display:none;">下一题</button>
-        </div>
-        <div id="trendTab" class="tab-content">
-            <h3 style="color:var(--text);font-size:1em;margin-bottom:12px;font-weight:600">📈 情绪趋势</h3>
-            <div class="trend-stats">
-                <div class="trend-stat"><div class="trend-stat-value" id="avgScore">--</div><div class="trend-stat-label">平均分</div></div>
-                <div class="trend-stat"><div class="trend-stat-value" id="maxScore">--</div><div class="trend-stat-label">最高分</div></div>
-                <div class="trend-stat"><div class="trend-stat-value" id="totalCount">0</div><div class="trend-stat-label">评估次数</div></div>
-            </div>
-            <h4 style="color:var(--text);font-size:1em;margin-top:16px;margin-bottom:12px;font-weight:600">📋 历史记录</h4>
-            <div id="historyList"></div>
-        </div>
-        <div id="calendarTab" class="tab-content">
-            <div class="calendar-header">
-                <button class="calendar-nav-btn" id="prevMonth">◀</button>
-                <span class="calendar-month" id="calendarMonth"></span>
-                <button class="calendar-nav-btn" id="nextMonth">▶</button>
-            </div>
-            <div class="calendar-grid" id="calendarGrid"></div>
-            <div class="legend">
-                <span><div class="legend-dot" style="background:var(--mint-light)"></div>良好</span>
-                <span><div class="legend-dot" style="background:var(--sky-light)"></div>不错</span>
-                <span><div class="legend-dot" style="background:linear-gradient(135deg,var(--peach-light),var(--lavender-light))"></div>一般</span>
-                <span><div class="legend-dot" style="background:linear-gradient(135deg,var(--peach),var(--lavender))"></div>较差</span>
-                <span><div class="legend-dot" style="background:linear-gradient(135deg,var(--peach),#E8A5A5)"></div>需关注</span>
-            </div>
-        </div>
-        <div id="breathTab" class="tab-content">
-            <div class="breathing-container">
-                <div class="breathing-circle" id="breathingCircle">
-                    <div class="breathing-text" id="breathingText">准备好了</div>
-                    <div class="breathing-sub" id="breathingSub">点击开始</div>
-                </div>
-                <div class="breathing-controls">
-                    <button class="breath-preset active" data-mode="4,7,8">4-7-8 呼吸</button>
-                    <button class="breath-preset" data-mode="5,5,5">5-5 平衡</button>
-                    <button class="breath-preset" data-mode="6,6,6">6-6 放松</button>
-                </div>
-                <div class="breath-guide" id="breathGuide">💡 吸气4秒 → 屏息7秒 → 呼气8秒</div>
-            </div>
-        </div>
-        <div id="bubbleTab" class="tab-content">
-            <div class="bubble-container">
-                <div class="bubble-stats">
-                    <span>🫧 已戳破: <strong id="poppedCount">0</strong>/18</span>
-                    <label style="display:flex;align-items:center;gap:8px;font-size:0.85em;color:var(--text)"><input type="checkbox" id="soundToggle" checked> 🔊 音效</label>
-                </div>
-                <div class="bubble-grid" id="bubbleGrid"></div>
-                <p class="bubble-hint">点击气泡戳破它们，释放压力！</p>
-            </div>
-        </div>
-        <div id="moreTab" class="tab-content">
-            <div class="tip-card">
-                <div class="tip-label">💡 今日小贴士</div>
-                <div class="tip-text" id="tipText">对自己不要太苛刻，接受不完美是心理健康的标志。</div>
-                <button class="tip-refresh" id="refreshTip">换一条 →</button>
-            </div>
-            <div class="goals-section">
-                <h4 style="color:var(--text);font-size:1em;margin-bottom:12px;font-weight:600">🎯 目标设定 <span id="goalProgress">(0/0)</span></h4>
-                <div class="goal-progress"><div class="goal-progress-fill" id="goalProgressFill" style="width:0%"></div></div>
-                <div id="goalList"></div>
-                <div class="goal-add">
-                    <input type="text" id="goalInput" placeholder="添加新目标...">
-                    <button class="btn btn-primary" id="addGoal" style="width:auto;padding:10px 20px">添加</button>
-                </div>
-            </div>
-            <div style="margin-top:16px">
-                <h4 style="color:var(--text);font-size:1em;margin-bottom:12px;font-weight:600">📚 资源推荐</h4>
-                <div class="resource-grid">
-                    <div class="resource-card" data-res="read"><div class="resource-icon">📖</div><div class="resource-title">阅读</div></div>
-                    <div class="resource-card" data-res="app"><div class="resource-icon">📱</div><div class="resource-title">APP</div></div>
-                    <div class="resource-card" data-res="video"><div class="resource-icon">🎬</div><div class="resource-title">视频</div></div>
-                    <div class="resource-card" data-res="help"><div class="resource-icon">🤝</div><div class="resource-title">帮助</div></div>
-                </div>
-                <div class="hotline-card">
-                    <div class="hotline-title">📞 心理援助热线</div>
-                    <div class="hotline-number">400-161-9995</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal" id="resultModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-icon" id="resultIcon">🌿</div>
-                <h3 class="modal-title" id="resultTitle">评估结果</h3>
-                <p class="modal-subtitle" id="resultDate"></p>
-            </div>
-            <div id="modalBody"></div>
-        </div>
-    </div>
-    <div class="modal" id="resourcesModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-icon">📚</div>
-                <h3 class="modal-title" id="resourcesTitle">资源推荐</h3>
-            </div>
-            <div id="resourcesBody"></div>
-            <button class="btn btn-secondary" id="closeResources" style="margin-top:16px">关闭</button>
-        </div>
-    </div>
+<div class="welcome-overlay" id="welcomeOverlay">
+<div class="welcome-content">
+<div class="welcome-icon">🍿</div>
+<h2 class="welcome-title">心理健康自评</h2>
+<p class="welcome-subtitle">选择最符合你的角色，获得定制化的心理评估</p>
+<div class="role-grid" id="roleGrid">
+<div class="role-card" data-role="workplace"><div class="role-icon">💼</div><div class="role-name">职场女性</div><div class="role-desc">工作压力大</div></div>
+<div class="role-card" data-role="homemaker"><div class="role-icon">🏠</div><div class="role-name">家庭主妇</div><div class="role-desc">家庭事务繁重</div></div>
+<div class="role-card" data-role="student"><div class="role-icon">📚</div><div class="role-name">学生党</div><div class="role-desc">学业压力繁重</div></div>
+<div class="role-card" data-role="freelancer"><div class="role-icon">⬟</div><div class="role-name">自由职业</div><div class="role-desc">生活不规律</div></div>
+<div class="role-card" data-role="parent"><div class="role-icon">👶</div><div class="role-name">新手妈妼</div><div class="role-desc">肨儿压力与挑战</div></div>
+<div class="role-card" data-role="career"><div class="role-icon">🚀</div><div class="role-name">创业者</div><div class="role-desc">事业生活平衍</div></div>
+</div>
+<button class="btn btn-primary" id="startBtn" disabled>开始评估</button>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+var roleGrid=document.getElementById('roleGrid');
+var startBtn=document.getElementById('startBtn');
+var welcomeOverlay=document.getElementById('welcomeOverlay');
+var selectedRole=localStorage.getItem('mhRole');
+if(selectedRole){startBtn.disabled=false;var card=roleGrid.querySelector('[data-role="'+selectedRole+'"]');if(card)card.classList.add('selected');}
+roleGrid.addEventListener('click',function(e){var card=e.target.closest('.role-card');if(!card)return;var cards=roleGrid.querySelectorAll('.role-card');for(var i=0;i<cards.length;i++)cards[i].classList.remove('selected');card.classList.add('selected');localStorage.setItem('mhRole',card.dataset.role);startBtn.disabled=false;});
+startBtn.addEventListener('click',function(){welcomeOverlay.classList.add('hidden');alert('开始评估！角色：'+localStorage.getItem('mhRole'));});
+});
+</script>
+</body>
+</html>
