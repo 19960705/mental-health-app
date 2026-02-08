@@ -6,23 +6,9 @@
     <title>心理健康自评</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
-        :root {
-            --mint: #7DD3C0;
-            --mint-light: #A8E6CF;
-            --lavender: #B8A9C9;
-            --lavender-light: #D4C5E8;
-            --peach: #FFB5A7;
-            --peach-light: #FFD3C9;
-            --cream: #FDF8F5;
-            --cream-dark: #F5EDE8;
-            --sky: #A8D8EA;
-            --sky-light: #C5E8F4;
-            --text: #5A5A6E;
-            --text-light: #8B8B9E;
-            --shadow: rgba(125, 211, 192, 0.2);
-        }
+        :root{--mint:#7DD3C0;--mint-light:#A8E6CF;--lavender:#B8A9C9;--lavender-light:#D4C5E8;--peach:#FFB5A7;--peach-light:#FFD3C9;--cream:#FDF8F5;--cream-dark:#F5EDE8;--sky:#A8D8EA;--sky-light:#C5E8F4;--text:#5A5A6E;--text-light:#8B8B9E;--shadow:rgba(125,211,192,0.2)}
         body{font-family:-apple-system,'Segoe UI',sans-serif;background:linear-gradient(135deg,var(--cream) 0%,var(--sky-light) 50%,var(--lavender-light) 100%);min-height:100vh;padding:20px;padding-top:40px}
-        .container{background:var(--white);border-radius:24px;box-shadow:0 10px 40px var(--shadow);max-width:500px;width:100%;margin:0 auto;padding:24px}
+        .container{background:white;border-radius:24px;box-shadow:0 10px 40px var(--shadow);max-width:500px;width:100%;margin:0 auto;padding:24px}
         h1{color:var(--text);font-size:1.5em;text-align:center;margin-bottom:8px}
         .subtitle{color:var(--text-light);text-align:center;font-size:0.9em;margin-bottom:16px}
         .privacy-badge{display:inline-flex;align-items:center;gap:6px;background:var(--mint-light);color:#2D6A4F;padding:6px 14px;border-radius:20px;font-size:0.8em;margin-bottom:20px}
@@ -35,7 +21,7 @@
         @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
         .welcome-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,var(--mint-light),var(--sky-light),var(--lavender-light));z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px}
         .welcome-overlay.hidden{display:none}
-        .welcome-content{background:var(--white);border-radius:28px;padding:32px;max-width:400px;width:100%;box-shadow:0 20px 60px var(--shadow);animation:slideUp 0.5s}
+        .welcome-content{background:white;border-radius:28px;padding:32px;max-width:400px;width:100%;box-shadow:0 20px 60px var(--shadow);animation:slideUp 0.5s}
         @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
         .welcome-icon{font-size:3.5em;text-align:center;margin-bottom:12px}
         .welcome-title{font-size:1.4em;font-weight:700;color:var(--text);text-align:center;margin-bottom:20px}
@@ -51,7 +37,7 @@
         .question-number{color:var(--mint);font-size:0.85em;margin-bottom:8px;font-weight:600}
         .question-text{color:var(--text);font-size:1.05em;margin-bottom:16px;line-height:1.6;font-weight:500}
         .question-hint{color:var(--text-light);font-size:0.8em;margin-bottom:12px;font-style:italic}
-        .option{display:flex;align-items:center;padding:14px 16px;background:var(--white);border:2px solid var(--cream-dark);border-radius:12px;margin-bottom:10px;cursor:pointer;transition:all 0.25s}
+        .option{display:flex;align-items:center;padding:14px 16px;background:white;border:2px solid var(--cream-dark);border-radius:12px;margin-bottom:10px;cursor:pointer;transition:all 0.25s}
         .option:hover{border-color:var(--mint);background:var(--cream);transform:translateX(6px)}
         .option.selected{border-color:var(--mint);background:linear-gradient(135deg,var(--mint-light),var(--sky-light));transform:translateX(12px);box-shadow:0 6px 20px var(--shadow)}
         .option-letter{width:28px;height:28px;background:var(--mint);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;margin-right:12px;font-size:0.85em;transition:all 0.25s}
@@ -199,7 +185,7 @@
                 <li><span class="icon">🌿</span>每日心理小贴士</li>
             </ul>
             <label class="dont-show"><input type="checkbox" id="dontShowAgain"> 不再显示此页面</label>
-            <button class="welcome-btn" onclick="startApp()">开始使用</button>
+            <button class="welcome-btn" id="startBtn">开始使用</button>
         </div>
     </div>
     <div class="container">
@@ -207,32 +193,29 @@
         <p class="subtitle">了解自己，关爱自己</p>
         <div class="privacy-badge">🔒 数据仅本地存储</div>
         <div class="nav-tabs">
-            <button class="nav-tab active" onclick="showTab('assessment')">自评</button>
-            <button class="nav-tab" onclick="showTab('trend')">趋势</button>
-            <button class="nav-tab" onclick="showTab('calendar')">日历</button>
-            <button class="nav-tab" onclick="showTab('breath')">呼吸</button>
-            <button class="nav-tab" onclick="showTab('bubble')">解压</button>
-            <button class="nav-tab" onclick="showTab('more')">更多</button>
+            <button class="nav-tab active" data-tab="assessment">自评</button>
+            <button class="nav-tab" data-tab="trend">趋势</button>
+            <button class="nav-tab" data-tab="calendar">日历</button>
+            <button class="nav-tab" data-tab="breath">呼吸</button>
+            <button class="nav-tab" data-tab="bubble">解压</button>
+            <button class="nav-tab" data-tab="more">更多</button>
         </div>
-        <div id="assessmentTab" class="tab-content active"><div id="questionsContainer"></div><button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" style="display:none;">下一题</button></div>
-        <div id="trendTab" class="tab-content"><h3 class="section-title">📈 情绪趋势</h3><div class="trend-stats"><div class="trend-stat"><div class="trend-stat-value" id="avgScore">--</div><div class="trend-stat-label">平均分</div></div><div class="trend-stat"><div class="trend-stat-value" id="maxScore">--</div><div class="trend-stat-label">最高分</div></div><div class="trend-stat"><div class="trend-stat-value" id="totalCount">0</div><div class="trend-stat-label">评估次数</div></div></div><div class="chart-container"><canvas id="trendChart" class="chart-canvas"></canvas></div><h4 class="section-title" style="margin-top:16px">📋 历史记录</h4><div id="historyList"></div><div id="comparisonContainer" style="display:none"><h4 class="section-title" style="margin-top:16px">🔄 对比最近2次</h4><div class="comparison-container" id="comparisonResult"></div></div></div>
-        <div id="calendarTab" class="tab-content"><div class="calendar-header"><button class="calendar-nav-btn" onclick="changeMonth(-1)">◀</button><span class="calendar-month" id="calendarMonth"></span><button class="calendar-nav-btn" onclick="changeMonth(1)">▶</button></div><div class="calendar-grid" id="calendarGrid"></div><div class="legend"><span><div class="legend-dot" style="background:var(--mint-light)"></div>良好</span><span><div class="legend-dot" style="background:var(--sky-light)"></div>不错</span><span><div class="legend-dot" style="background:linear-gradient(135deg,var(--peach-light),var(--lavender-light))"></div>一般</span><span><div class="legend-dot" style="background:linear-gradient(135deg,var(--peach),var(--lavender))"></div>较差</span><span><div class="legend-dot" style="background:linear-gradient(135deg,var(--peach),#E8A5A5)"></div>需关注</span></div></div>
-        <div id="breathTab" class="tab-content"><div class="breathing-container"><div class="breathing-circle" id="breathingCircle"><div class="breathing-text" id="breathingText">准备好了</div><div class="breathing-sub" id="breathingSub">点击开始</div></div><div class="breathing-controls"><button class="breath-preset active" onclick="setBreathMode(4,7,8)">4-7-8 呼吸</button><button class="breath-preset" onclick="setBreathMode(5,5,5)">5-5 平衡</button><button class="breath-preset" onclick="setBreathMode(6,6,6)">6-6 放松</button></div><div class="breath-guide" id="breathGuide">💡 吸气4秒 → 屏息7秒 → 呼气8秒</div></div></div>
-        <div id="bubbleTab" class="tab-content"><div class="bubble-container"><div class="bubble-stats"><span>🫧 已戳破: <strong id="poppedCount">0</strong>/18</span><label class="sound-toggle"><input type="checkbox" id="soundToggle" checked onchange="toggleSound()"> 🔊 音效</label></div><div class="bubble-grid" id="bubbleGrid"></div><p class="bubble-hint">点击气泡戳破它们，释放压力！</p></div></div>
-        <div id="moreTab" class="tab-content"><div class="tip-card"><div class="tip-label">今日小贴士</div><div class="tip-text" id="tipText">对自己不要太苛刻，接受不完美是心理健康的标志。</div><button class="tip-refresh" onclick="refreshTip()">换一条 →</button></div><div class="radar-container"><h4 class="section-title" style="margin-bottom:12px">🎯 五维平衡</h4><canvas id="radarChart" class="radar-canvas"></canvas></div><div class="goals-section"><h4 class="section-title">🎯 目标设定 <span id="goalProgress">(0/0)</span></h4><div class="goal-progress"><div class="goal-progress-fill" id="goalProgressFill" style="width:0%"></div></div><div id="goalList"></div><div class="goal-add"><input type="text" id="goalInput" placeholder="添加新目标..." onkeypress="if(event.key==='Enter')addGoal()"><button class="btn btn-small btn-primary" onclick="addGoal()">添加</button></div></div><div class="resources-section"><h4 class="section-title">📚 资源推荐</h4><div class="resource-grid"><div class="resource-card" onclick="showResources('read')"><div class="resource-icon">📖</div><div class="resource-title">阅读</div></div><div class="resource-card" onclick="showResources('app')"><div class="resource-icon">📱</div><div class="resource-title">APP</div></div><div class="resource-card" onclick="showResources('video')"><div class="resource-icon">🎬</div><div class="resource-title">视频</div></div><div class="resource-card" onclick="showResources('help')"><div class="resource-icon">🤝</div><div class="resource-title">帮助</div></div></div><div class="hotline-card"><div class="hotline-title">📞 心理援助热线</div><div class="hotline-number">400-161-9995</div></div></div></div>
+        <div id="assessmentTab" class="tab-content active"><div id="questionsContainer"></div><button class="btn btn-primary" id="nextBtn" style="display:none;">下一题</button></div>
+        <div id="trendTab" class="tab-content"><h3 class="section-title">📈 情绪趋势</h3><div class="trend-stats"><div class="trend-stat"><div class="trend-stat-value" id="avgScore">--</div><div class="trend-stat-label">平均分</div></div><div class="trend-stat"><div class="trend-stat-value" id="maxScore">--</div><div class="trend-stat-label">最高分</div></div><div class="trend-stat"><div class="trend-stat-value" id="totalCount">0</div><div class="trend-stat-label">评估次数</div></div></div><div class="chart-container"><canvas id="trendChart" class="chart-canvas"></canvas></div><h4 class="section-title" style="margin-top:16px">📋 历史记录</h4><div id="historyList"></div></div>
+        <div id="calendarTab" class="tab-content"><div class="calendar-header"><button class="calendar-nav-btn" id="prevMonth">◀</button><span class="calendar-month" id="calendarMonth"></span><button class="calendar-nav-btn" id="nextMonth">▶</button></div><div class="calendar-grid" id="calendarGrid"></div><div class="legend"><span><div class="legend-dot" style="background:var(--mint-light)"></div>良好</span><span><div class="legend-dot" style="background:var(--sky-light)"></div>不错</span><span><div class="legend-dot" style="background:linear-gradient(135deg,var(--peach-light),var(--lavender-light))"></div>一般</span><span><div class="legend-dot" style="background:linear-gradient(135deg,var(--peach),var(--lavender))"></div>较差</span><span><div class="legend-dot" style="background:linear-gradient(135deg,var(--peach),#E8A5A5)"></div>需关注</span></div></div>
+        <div id="breathTab" class="tab-content"><div class="breathing-container"><div class="breathing-circle" id="breathingCircle"><div class="breathing-text" id="breathingText">准备好了</div><div class="breathing-sub" id="breathingSub">点击开始</div></div><div class="breathing-controls"><button class="breath-preset active" data-mode="4,7,8">4-7-8 呼吸</button><button class="breath-preset" data-mode="5,5,5">5-5 平衡</button><button class="breath-preset" data-mode="6,6,6">6-6 放松</button></div><div class="breath-guide" id="breathGuide">💡 吸气4秒 → 屏息7秒 → 呼气8秒</div></div></div>
+        <div id="bubbleTab" class="tab-content"><div class="bubble-container"><div class="bubble-stats"><span>🫧 已戳破: <strong id="poppedCount">0</strong>/18</span><label class="sound-toggle"><input type="checkbox" id="soundToggle" checked> 🔊 音效</label></div><div class="bubble-grid" id="bubbleGrid"></div><p class="bubble-hint">点击气泡戳破它们，释放压力！</p></div></div>
+        <div id="moreTab" class="tab-content"><div class="tip-card"><div class="tip-label">今日小贴士</div><div class="tip-text" id="tipText">对自己不要太苛刻，接受不完美是心理健康的标志。</div><button class="tip-refresh" id="refreshTip">换一条 →</button></div><div class="goals-section"><h4 class="section-title">🎯 目标设定 <span id="goalProgress">(0/0)</span></h4><div class="goal-progress"><div class="goal-progress-fill" id="goalProgressFill" style="width:0%"></div></div><div id="goalList"></div><div class="goal-add"><input type="text" id="goalInput" placeholder="添加新目标..."><button class="btn btn-small btn-primary" id="addGoal">添加</button></div></div><div class="resources-section"><h4 class="section-title">📚 资源推荐</h4><div class="resource-grid"><div class="resource-card" data-res="read"><div class="resource-icon">📖</div><div class="resource-title">阅读</div></div><div class="resource-card" data-res="app"><div class="resource-icon">📱</div><div class="resource-title">APP</div></div><div class="resource-card" data-res="video"><div class="resource-icon">🎬</div><div class="resource-title">视频</div></div><div class="resource-card" data-res="help"><div class="resource-icon">🤝</div><div class="resource-title">帮助</div></div></div><div class="hotline-card"><div class="hotline-title">📞 心理援助热线</div><div class="hotline-number">400-161-9995</div></div></div></div>
     </div>
     <div class="modal" id="resultModal"><div class="modal-content"><div class="modal-header"><div class="modal-icon" id="resultIcon">🌿</div><h3 class="modal-title" id="resultTitle">评估结果</h3><p class="modal-subtitle" id="resultDate"></p></div><div id="modalBody"></div></div></div>
-    <div class="modal" id="resourcesModal"><div class="modal-content"><div class="modal-header"><div class="modal-icon">📚</div><h3 class="modal-title" id="resourcesTitle">资源推荐</h3></div><div class="resource-list" id="resourcesBody"></div><button class="btn btn-secondary" onclick="closeResourcesModal()" style="margin-top:16px">关闭</button></div></div>
+    <div class="modal" id="resourcesModal"><div class="modal-content"><div class="modal-header"><div class="modal-icon">📚</div><h3 class="modal-title" id="resourcesTitle">资源推荐</h3></div><div class="resource-list" id="resourcesBody"></div><button class="btn btn-secondary" id="closeResources" style="margin-top:16px">关闭</button></div></div>
     <script>
         const questions=[
-            {q:"近期你的情绪状态是？",hint:"选择最符合你实际情况的描述",dim:"mood",o:["积极乐观，情绪稳定","总体还不错，偶尔有些低落","经常感到焦虑或情绪低落","大部分时间感到沮丧或无助"]},
-            {q:"近期你感受到的压力程度？",hint:"来自工作、家庭、人际关系等",dim:"stress",o:["压力适中，可以应对","有些压力，但能承受","压力较大，感到有些吃力","压力过重，快喘不过气"]},
-            {q:"你的精力和活力水平？",hint:"日常工作和生活中的状态",dim:"energy",o:["精力充沛，充满活力","精力还可以，能应付日常","经常感到疲惫乏力","做什么都提不起劲"]},
-            {q:"你的人际关系感受？",hint:"与家人朋友相处的感受",dim:"relation",o:["关系融洽，感到被支持","关系还可以，有时有些孤独","关系有些紧张或困扰","感到孤立，缺乏支持"]},
-            {q:"你的睡眠质量如何？",hint:"入睡、维持和醒来的感受",dim:"sleep",o:["睡眠良好，精力充沛","睡眠还可以，偶有失眠","经常失眠或睡眠不足","严重失眠，影响生活"]},
-            {q:"对自己和生活满意度？",dim:"satisfaction",o:["很满意，感到幸福","还算满意","不太满意，有些迷茫","很不满意，需要改变"]},
-            {q:"近期有感到无助或绝望吗？",dim:"hopeless",o:["完全没有","偶尔有一些","经常有","一直有"]},
-            {q:"面对困难时的应对能力？",dim:"coping",o:["能积极面对，寻求解决","基本能应对","感到困难，难以应对","感到无法应对"]}
+            {q:"近期你的情绪状态是？",hint:"选择最符合你实际情况的描述",dim:"情绪",o:["积极乐观，情绪稳定","总体还不错，偶尔有些低落","经常感到焦虑或情绪低落","大部分时间感到沮丧或无助"]},
+            {q:"近期你感受到的压力程度？",hint:"来自工作、家庭、人际关系等",dim:"压力",o:["压力适中，可以应对","有些压力，但能承受","压力较大，感到有些吃力","压力过重，快喘不过气"]},
+            {q:"你的精力和活力水平？",dim:"精力",o:["精力充沛，充满活力","精力还可以，能应付日常","经常感到疲惫乏力","做什么都提不起劲"]},
+            {q:"你的睡眠质量如何？",dim:"睡眠",o:["睡眠良好，精力充沛","睡眠还可以，偶有失眠","经常失眠或睡眠不足","严重失眠，影响生活"]},
+            {q:"对自己和生活满意度？",dim:"满意",o:["很满意，感到幸福","还算满意","不太满意，有些迷茫","很不满意，需要改变"]}
         ];
         const tips=[
             "对自己不要太苛刻，接受不完美是心理健康的标志。",
@@ -252,12 +235,12 @@
             "记住：寻求帮助是勇敢的表现。"
         ];
         const resources={
-            read:{title:"📖 推荐阅读",list:["<strong>《情绪急救》</strong> - 盖伊·温奇博士","<strong>《当下的力量》</strong> - 埃克哈特·托利","<strong>《伯恩斯新情绪疗法》</strong> - 戴维·伯恩斯"]},
-            app:{title:"📱 推荐APP",list:["<strong>潮汐</strong> - 白噪音和放松","<strong"strong>小睡眠</strong> - 助眠声音故事","<strong>心潮</strong> - 心理健康自评"]},
-            video:{title:"🎬 推荐视频",list:["<strong>李松蔚心理学</strong> - 知乎","<strong>武志红心理</strong> - 微信公众号","<strong>壹心理</strong> - 专业心理内容"]},
-            help:{title:"🤝 专业帮助",list:["<strong>简单心理</strong> - 心理咨询预约","<strong>壹心理</strong> - 专业心理平台","<strong>心理援助热线</strong> - 400-161-9995"]}
+            read:{title:"推荐阅读",list:["《情绪急救》- 盖伊·温奇博士","《当下的力量》- 埃克哈特·托利","《伯恩斯新情绪疗法》- 戴维·伯恩斯"]},
+            app:{title:"推荐APP",list:["潮汐 - 白噪音和放松","小睡眠 - 助眠声音故事","心潮 - 心理健康自评"]},
+            video:{title:"推荐视频",list:["李松蔚心理学 - 知乎","武志红心理 - 微信公众号","壹心理 - 专业心理内容"]},
+            help:{title:"专业帮助",list:["简单心理 - 心理咨询预约","壹心理 - 专业心理平台","心理援助热线 - 400-161-9995"]}
         };
-        let state={q:0,a:[],history:[],goals:[],currentTip:0};
+        let state={q:0,a:[],history:[],goals:[],tipIdx:0};
         function init(){
             if(localStorage.getItem('mhWelcome')!=='false'){
                 document.getElementById('welcomeOverlay').classList.remove('hidden');
@@ -271,128 +254,106 @@
             updateTrend();
             renderCalendar();
             renderGoals();
-            renderTip();
-            document.getElementById('assessmentTab').classList.add('active');
         }
-        function startApp(){
+        document.getElementById('startBtn').onclick=function(){
             if(document.getElementById('dontShowAgain').checked)localStorage.setItem('mhWelcome','false');
             document.getElementById('welcomeOverlay').classList.add('hidden');
-        }
+        };
+        document.querySelectorAll('.nav-tab').forEach(function(b){
+            b.onclick=function(){showTab(this.dataset.tab)};
+        });
         function showTab(t){
-            document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-            document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+            document.querySelectorAll('.nav-tab').forEach(function(b){b.classList.remove('active')});
             document.getElementById(t+'Tab').classList.add('active');
-            event.target.classList.add('active');
+            document.querySelector('[data-tab="'+t+'"]').classList.add('active');
             if(t==='trend')updateTrend();
             if(t==='calendar')renderCalendar();
-            if(t==='more')renderRadar();
         }
         function renderQuestions(){
             const q=questions[state.q];
-            document.getElementById('questionsContainer').innerHTML=`
-                <div class="progress-text">${state.q+1}/${questions.length}</div>
-                <div class="progress-bar"><div class="progress-fill" style="width:${(state.q+1)/questions.length*100}%"></div></div>
-                <div class="question-card">
-                    <div class="question-number">${q.dim||'问题'}</div>
-                    <div class="question-text">${q.q}</div>
-                    ${q.hint?`<div class="question-hint">💡 ${q.hint}</div>`:''}
-                </div>
-                ${q.o.map((o,i)=>`<div class="option" onclick="selectOption(${i})"><span class="option-letter">${String.fromCharCode(65+i)}</span><span class="option-text">${o}</span></div>`).join('')}
-            `;
+            document.getElementById('questionsContainer').innerHTML='<div class="progress-text">'+(state.q+1)+'/'+questions.length+'</div><div class="progress-bar"><div class="progress-fill" style="width:'+((state.q+1)/questions.length*100)+'%"></div></div><div class="question-card"><div class="question-number">'+q.dim+'</div><div class="question-text">'+q.q+'</div>'+(q.hint?'<div class="question-hint">💡 '+q.hint+'</div>':'')+'</div>'+q.o.map(function(o,i){return'<div class="option" data-idx="'+i+'"><span class="option-letter">'+String.fromCharCode(65+i)+'</span><span class="option-text">'+o+'</span></div>'}).join('')+'';
             document.getElementById('nextBtn').style.display='none';
+            document.querySelectorAll('#questionsContainer .option').forEach(function(el){
+                el.onclick=function(){selectOption(parseInt(this.dataset.idx))};
+            });
         }
         function selectOption(i){
-            const os=document.querySelectorAll('.option');
-            os.forEach((o,idx)=>{o.classList.remove('selected');if(idx===i)o.classList.add('selected')});
+            document.querySelectorAll('.option').forEach(function(o){o.classList.remove('selected')});
+            document.querySelectorAll('.option')[i].classList.add('selected');
             state.a[state.q]=i+1;
             document.getElementById('nextBtn').style.display='block';
             document.getElementById('nextBtn').textContent=state.q<questions.length-1?'下一题':'查看结果';
         }
-        function nextQuestion(){
+        document.getElementById('nextBtn').onclick=function(){
             if(state.q<questions.length-1){state.q++;renderQuestions();}
             else showResult();
-        }
+        };
         function showResult(){
-            const s=state.a.reduce((a,b)=>a+b,0);
+            const s=state.a.reduce(function(a,b){return a+b},0);
             const r=Math.round(s/questions.length*100);
-            let lvl,l,ic,desc,suggs;
+            let lvl,ic,desc,suggs;
             if(r>=85){lvl='状态良好';ic='🌿';desc='你的心理状态很不错！继续保持。';suggs=['保持规律作息和运动习惯','继续培养有益的兴趣爱好','维持良好的社交关系','定期进行心理健康自检']}
             else if(r>=70){lvl='状态不错';ic='🌤️';desc='你的整体状态还可以，注意调节。';suggs=['继续保持良好的生活习惯','适度运动有助于保持状态','与朋友保持联系和交流','发现情绪低落时及时调整']}
             else if(r>=55){lvl='需要关注';ic='🌤️';desc='有些方面需要多注意，适当调整。';suggs=['尝试记录情绪日记','每天给自己一些放松时间','适当减少压力源','考虑与信任的人聊聊']}
             else{lvl='建议关注';ic='🤝';desc='建议寻求专业帮助，你不是一个人。';suggs=['尽早联系心理咨询师或医生','告诉信任的人你的感受','保持基本的生活规律','必要时寻求医疗支持','记住：寻求帮助是勇敢的表现']}
-            state.history.push({date:new Date().toISOString(),score:r,answers:state.a});
+            state.history.push({date:new Date().toISOString(),score:r,a:state.a});
             if(state.history.length>30)state.history.shift();
             localStorage.setItem('mhHistory',JSON.stringify(state.history));
             const d=[state.a[0],5-state.a[1],state.a[2],state.a[4],Math.round((state.a[0]+state.a[2]+(5-state.a[1])+state.a[4])/4)];
             document.getElementById('resultIcon').textContent=ic;
             document.getElementById('resultTitle').textContent=lvl;
             document.getElementById('resultDate').textContent=new Date().toLocaleDateString('zh-CN');
-            document.getElementById('modalBody').innerHTML=`
-                <div class="result-card">
-                    <div class="score-display"><span class="score-number">${r}</span><span class="score-label">分</span></div>
-                    <div class="result-level"><div class="level-name">${ic} ${lvl}</div><div class="level-desc">${desc}</div></div>
-                </div>
-                ${d.map((di,i)=>`<div class="dimension-card"><div class="dimension-title">${['情绪','压力','精力','睡眠','整体'][i]}</div><div class="dimension-bar"><div class="dimension-fill ${di>=3?'high':di>=2?'medium':'low'}" style="width:${di*25}%"></div></div></div>`).join('')}
-                <div class="suggestion-section"><div class="suggestion-title">💡 建议</div>${suggs.map(s=>`<div class="suggestion-item"><span class="suggestion-icon">→</span><span class="suggestion-text">${s}</span></div>`).join('')}</div>
-                <div class="disclaimer">📝 本评估仅供参考，不能替代专业诊断。如有严重心理困扰，建议咨询专业心理医生。</div>
-                <div class="share-buttons"><button class="share-btn" onclick="closeModal();showTab('trend')">📈 查看趋势</button><button class="share-btn primary" onclick="shareResult()">📤 分享结果</button></div>
-            `;
+            document.getElementById('modalBody').innerHTML='<div class="result-card"><div class="score-display"><span class="score-number">'+r+'</span><span class="score-label">分</span></div><div class="result-level"><div class="level-name">'+ic+' '+lvl+'</div><div class="level-desc">'+desc+'</div></div></div>'+d.map(function(di,i){return'<div class="dimension-card"><div class="dimension-title">'+['情绪','压力','精力','睡眠','整体'][i]+'</div><div class="dimension-bar"><div class="dimension-fill '+(di>=3?'high':di>=2?'medium':'low')+'" style="width:'+(di*25)+'%"></div></div></div>'}).join('')+'<div class="suggestion-section"><div class="suggestion-title">💡 建议</div>'+suggs.map(function(s){return'<div class="suggestion-item"><span class="suggestion-icon">→</span><span class="suggestion-text">'+s+'</span></div>'}).join('')+'</div><div class="disclaimer">📝 本评估仅供参考，不能替代专业诊断。</div><div class="share-buttons"><button class="share-btn" id="closeModalBtn">关闭</button><button class="share-btn primary" id="shareBtn">分享</button></div>';
             document.getElementById('resultModal').classList.add('show');
+            document.getElementById('closeModalBtn').onclick=function(){document.getElementById('resultModal').classList.remove('show')};
+            document.getElementById('shareBtn').onclick=function(){var t='🌿 心理健康自评结果\n日期：'+new Date().toLocaleDateString('zh-CN')+'\n得分：'+r+'分\n'+'🌿'.repeat(Math.ceil(r/20));if(navigator.share)navigator.share({title:'心理健康自评',text:t});else navigator.clipboard.writeText(t)};
             state.q=0;state.a=[];
-        }
-        function closeModal(){document.getElementById('resultModal').classList.remove('show')}
-        function shareResult(){
-            const r=state.history[state.history.length-1];
-            const txt=`🌿 心理健康自评结果\n\n日期：${new Date(r.date).toLocaleDateString('zh-CN')}\n得分：${r.score}分\n\n${'🌿'.repeat(Math.ceil(r.score/20))}\n\n——来自心理健康自评`;
-            if(navigator.share)navigator.share({title:'心理健康自评结果',text:txt}).catch(()=>navigator.clipboard.writeText(txt));
-            else navigator.clipboard.writeText(txt);
         }
         function updateTrend(){
             const h=state.history;
             if(h.length===0){document.getElementById('avgScore').textContent='--';document.getElementById('maxScore').textContent='--';document.getElementById('totalCount').textContent='0';return;}
-            const s=h.map(x=>x.score);
-            document.getElementById('avgScore').textContent=Math.round(s.reduce((a,b)=>a+b,0)/s.length);
-            document.getElementById('maxScore').textContent=Math.max(...s);
+            const s=h.map(function(x){return x.score});
+            document.getElementById('avgScore').textContent=Math.round(s.reduce(function(a,b){return a+b},0)/s.length);
+            document.getElementById('maxScore').textContent=Math.max.apply(null,s);
             document.getElementById('totalCount').textContent=s.length;
-            document.getElementById('historyList').innerHTML=h.slice(-7).reverse().map(d=>`<div class="history-item"><span class="history-date">${new Date(d.date).toLocaleDateString('zh-CN')}</span><span class="history-score">${d.score}分</span></div>`).join('');
+            document.getElementById('historyList').innerHTML=h.slice(-7).reverse().map(function(d){return'<div class="history-item"><span class="history-date">'+new Date(d.date).toLocaleDateString('zh-CN')+'</span><span class="history-score">'+d.score+'分</span></div>'}).join('');
         }
         let calDate=new Date();
         function renderCalendar(){
-            const d=calDate,y=d.getFullYear(),m=d.getMonth();
-            document.getElementById('calendarMonth').textContent=`${y}年${m+1}月`;
+            const y=calDate.getFullYear(),m=calDate.getMonth();
+            document.getElementById('calendarMonth').textContent=y+'年'+(m+1)+'月';
             const first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();
             const wk=['日','一','二','三','四','五','六'];
-            let html=wk.map(w=`<div class="calendar-day-header">${w}</div>`).join('');
+            let html=wk.map(function(w){return'<div class="calendar-day-header">'+w+'</div>'}).join('');
             for(let i=0;i<first;i++)html+='<div></div>';
             const td=new Date();
             for(let i=1;i<=days;i++){
-                const h=state.history.find(x=>{const d2=new Date(x.date);return d2.getFullYear()===y&&d2.getMonth()===m&&d2.getDate()===i});
+                const h=state.history.find(function(x){var d2=new Date(x.date);return d2.getFullYear()===y&&d2.getMonth()===m&&d2.getDate()===i});
                 const lvl=h?h.score>=85?1:h.score>=70?2:h.score>=55?3:h.score>=40?4:5:0;
-                const cls=lvl?`calendar-day-${lvl}`+(td.getFullYear()===y&&td.getMonth()===m&&td.getDate()===i?' calendar-day-today':''):'';
-                html+=`<div class="calendar-day ${cls}">${i}</div>`;
+                const cls=lvl?'calendar-day-'+lvl+(td.getFullYear()===y&&td.getMonth()===m&&td.getDate()===i?' calendar-day-today':''):'';
+                html+='<div class="calendar-day '+cls+'">'+i+'</div>';
             }
             document.getElementById('calendarGrid').innerHTML=html;
         }
-        function changeMonth(d){calDate.setMonth(calDate.getMonth()+d);renderCalendar();}
-        let breathState={in:4,hold:7,out:8,running:false,timer:null};
-        function setBreathMode(i,h,o){breathState.in=i;breathState.hold=h;breathState.out=o;breathState.running=false;clearTimeout(breathState.timer);document.getElementById('breathingText').textContent='准备好了';document.getElementById('breathingSub').textContent='点击开始';document.getElementById('breathingCircle').classList.remove('expand');document.querySelectorAll('.breath-preset').forEach((b,idx)=>b.classList.toggle('active',idx===(i===4?0:i===5?1:2)));document.getElementById('breathGuide').textContent=`💡 吸气${i}秒 → 屏息${h}秒 → 呼气${o}秒`;}
-        function toggleBreath(){if(breathState.running){breathState.running=false;clearTimeout(breathState.timer);document.getElementById('breathingText').textContent='已暂停';document.getElementById('breathingSub').textContent='点击继续';document.getElementById('breathingCircle').classList.remove('expand');return;}breathState.running=true;const run=()=>{if(!breathState.running)return;document.getElementById('breathingText').textContent='吸气';document.getElementById('breathingSub').textContent=`${breathState.in}秒`;document.getElementById('breathingCircle').classList.add('expand');breathState.timer=setTimeout(()=>{if(!breathState.running)return;document.getElementById('breathingText').textContent='屏息';document.getElementById('breathingSub').textContent=`${breathState.hold}秒`;breathState.timer=setTimeout(()=>{if(!breathState.running)return;document.getElementById('breathingText').textContent='呼气';document.getElementById('breathingSub').textContent=`${breathState.out}秒`;document.getElementById('breathingCircle').classList.remove('expand');breathState.timer=setTimeout(run,breathState.out*1000);},breathState.hold*1000);},breathState.in*1000);};run();}
-        document.getElementById('breathingCircle').onclick=toggleBreath;
+        document.getElementById('prevMonth').onclick=function(){calDate.setMonth(calDate.getMonth()-1);renderCalendar();};
+        document.getElementById('nextMonth').onclick=function(){calDate.setMonth(calDate.getMonth()+1);renderCalendar();};
+        let breathMode={in:4,hold:7,out:8,running:false,timer:null};
+        document.querySelectorAll('.breath-preset').forEach(function(b){
+            b.onclick=function(){var m=this.dataset.mode.split(',').map(Number);breathMode.in=m[0];breathMode.hold=m[1];breathMode.out=m[2];breathMode.running=false;clearTimeout(breathMode.timer);document.getElementById('breathingText').textContent='准备好了';document.getElementById('breathingSub').textContent='点击开始';document.getElementById('breathingCircle').classList.remove('expand');document.querySelectorAll('.breath-preset').forEach(function(p){p.classList.remove('active')});this.classList.add('active');document.getElementById('breathGuide').textContent='💡 吸气'+m[0]+'秒 → 屏息'+m[1]+'秒 → 呼气'+m[2]+'秒';};
+        });
+        document.getElementById('breathingCircle').onclick=function(){
+            if(breathMode.running){breathMode.running=false;clearTimeout(breathMode.timer);document.getElementById('breathingText').textContent='已暂停';document.getElementById('breathingSub').textContent='点击继续';document.getElementById('breathingCircle').classList.remove('expand');return;}
+            breathMode.running=true;var run=function(){if(!breathMode.running)return;document.getElementById('breathingText').textContent='吸气';document.getElementById('breathingSub').textContent=breathMode.in+'秒';document.getElementById('breathingCircle').classList.add('expand');breathMode.timer=setTimeout(function(){if(!breathMode.running)return;document.getElementById('breathingText').textContent='屏息';document.getElementById('breathingSub').textContent=breathMode.hold+'秒';breathMode.timer=setTimeout(function(){if(!breathMode.running)return;document.getElementById('breathingText').textContent='呼气';document.getElementById('breathingSub').textContent=breathMode.out+'秒';document.getElementById('breathingCircle').classList.remove('expand');breathMode.timer=setTimeout(run,breathMode.out*1000);},breathMode.hold*1000);},breathMode.in*1000);};run();};
         function renderBubble(){
-            const g=document.getElementById('bubbleGrid');g.innerHTML='';
-            const cs=['#7DD3C0','#A8E6CF','#B8A9C9','#D4C5E8','#FFB5A7','#FFD3C9'];
-            for(let i=0;i<18;i++){const b=document.createElement('button');b.className='bubble';b.style.background=cs[i%cs.length];b.onclick=()=>popBubble(b);g.appendChild(b);}updatePopped();}
-        function popBubble(b){if(b.classList.contains('popped'))return;b.classList.add('popped');updatePopped();}
-        function updatePopped(){document.getElementById('poppedCount').textContent=document.querySelectorAll('.bubble.popped').count;}
-        function toggleSound(){}
-        function refreshTip(){state.currentTip=(state.currentTip+1)%tips.length;document.getElementById('tipText').textContent=tips[state.currentTip];}
-        function renderGoals(){const gl=document.getElementById('goalList');const cg=state.goals.filter(g=>!g.done);const cd=state.goals.filter(g=>g.done).length;gl.innerHTML=state.goals.map((g,i)=>`<div class="goal-item"><span class="goal-checkbox ${g.done?'checked':''}" onclick="toggleGoal(${i})">${g.done?'✓':''}</span><span class="goal-text ${g.done?'completed':''}">${g.text}</span><button class="goal-delete" onclick="deleteGoal(${i})">×</button></div>`).join('');document.getElementById('goalProgress').textContent=`(${cg.length}/${state.goals.length})`;document.getElementById('goalProgressFill').style.width=state.goals.length?cd/state.goals.length*100+'%':'0%';localStorage.setItem('mhGoals',JSON.stringify(state.goals));}
-        function addGoal(){const i=document.getElementById('goalInput');if(i.value.trim()&&state.goals.length<10){state.goals.push({text:i.value.trim(),done:false});i.value='';renderGoals();}}
-        function toggleGoal(i){state.goals[i].done=!state.goals[i].done;renderGoals();}
-        function deleteGoal(i){state.goals.splice(i,1);renderGoals();}
-        function renderRadar(){}
-        function showResources(t){const r=resources[t];document.getElementById('resourcesTitle').textContent=r.title;document.getElementById('resourcesBody').innerHTML=r.list.map(l=>`<li>${l}</li>`).join('');document.getElementById('resourcesModal').classList.add('show');}
-        function closeResourcesModal(){document.getElementById('resourcesModal').classList.remove('show')}
+            var g=document.getElementById('bubbleGrid'),cs=['#7DD3C0','#A8E6CF','#B8A9C9','#D4C5E8','#FFB5A7','#FFD3C9'];
+            g.innerHTML='';for(var i=0;i<18;i++){var b=document.createElement('button');b.className='bubble';b.style.background=cs[i%cs.length];b.onclick=function(){if(this.classList.contains('popped'))return;this.classList.add('popped');updatePopped();};g.appendChild(b);}updatePopped();}
+        function updatePopped(){document.getElementById('poppedCount').textContent=document.querySelectorAll('.bubble.popped').length;}
+        document.getElementById('refreshTip').onclick=function(){state.tipIdx=(state.tipIdx+1)%tips.length;document.getElementById('tipText').textContent=tips[state.tipIdx];};
+        function renderGoals(){var gl=document.getElementById('goalList'),cg=state.goals.filter(function(g){return!g.done}),cd=state.goals.filter(function(g){return g.done}).length;gl.innerHTML=state.goals.map(function(g,i){return'<div class="goal-item"><span class="goal-checkbox '+(g.done?'checked':'')+'" data-idx="'+i+'">'+(g.done?'✓':'')+'</span><span class="goal-text '+(g.done?'completed':'')+'">'+g.text+'</span><button class="goal-delete" data-idx="'+i+'">×</button></div>'}).join('');document.getElementById('goalProgress').textContent='('+cg.length+'/'+state.goals.length+')';document.getElementById('goalProgressFill').style.width=state.goals.length?(cd/state.goals.length*100)+'%':'0%';localStorage.setItem('mhGoals',JSON.stringify(state.goals));document.querySelectorAll('.goal-checkbox').forEach(function(el){el.onclick=function(){state.goals[parseInt(this.dataset.idx)].done=!state.goals[parseInt(this.dataset.idx)].done;renderGoals();};});document.querySelectorAll('.goal-delete').forEach(function(el){el.onclick=function(){state.goals.splice(parseInt(this.dataset.idx),1);renderGoals();};});}
+        document.getElementById('addGoal').onclick=function(){var i=document.getElementById('goalInput');if(i.value.trim()&&state.goals.length<10){state.goals.push({text:i.value.trim(),done:false});i.value='';renderGoals();}};
+        document.querySelectorAll('.resource-card').forEach(function(el){el.onclick=function(){var r=resources[this.dataset.res];document.getElementById('resourcesTitle').textContent=r.title;document.getElementById('resourcesBody').innerHTML=r.list.map(function(l){return'<li>'+l+'</li>'}).join('');document.getElementById('resourcesModal').classList.add('show');};});
+        document.getElementById('closeResources').onclick=function(){document.getElementById('resourcesModal').classList.remove('show');};
         init();
     </script>
 </body>
