@@ -1944,6 +1944,7 @@
                     this.classList.add('popped');
                     const popped = document.querySelectorAll('.bubble.popped').length;
                     el.poppedCount.textContent = popped;
+                    try { playPopSound(); } catch(e) {};
                 });
                 el.bubbleGrid.appendChild(b);
             }
