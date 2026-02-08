@@ -1043,7 +1043,7 @@
             <div class="role-grid" id="roleGrid">
                 <!-- 角色卡片将由JavaScript动态生成 -->
             </div>
-            <button class="btn btn-primary" id="startBtn" disabled>开始评估</button>
+            <button class="btn btn-primary" id="startBtn" disabled onclick="window.startAssessment && window.startAssessment()">开始评估</button>
         </div>
     </div>
 
@@ -1052,7 +1052,7 @@
         <h1>心理健康自评</h1>
         <div class="role-header">
             <span class="subtitle" id="roleBadge"></span>
-            <button class="switch-role-btn" id="switchRoleBtn" onclick="var o=document.getElementById('welcomeOverlay');o.classList.remove('hidden');o.style.display='flex';">🔄 切换</button>
+            <button class="switch-role-btn" id="switchRoleBtn" onclick="window.showRoleSelector && window.showRoleSelector()">🔄 切换</button>
         </div>
         <div class="privacy-badge">🔒 数据仅本地存储</div>
         
@@ -1981,6 +1981,10 @@
         }
 
         // ==================== 启动应用 ====================
+        
+        // 暴露关键函数到全局
+        window.startAssessment = startAssessment;
+        window.showRoleSelector = showRoleSelector;
         
         document.addEventListener('DOMContentLoaded', init);
     </script>
